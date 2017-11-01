@@ -26,4 +26,4 @@ branches:
   - "/^greenkeeper/.*$/"
 env:
   global:
-    - CC_TEST_REPORTER_ID=d8f5e73d0ee3db18fb0ce70d5ed430f91e5bbdea75080f85991d27aeb715f3c8
+    - CC_TEST_REPORTER_ID=500f2daa890ec8bac5ffac26012bd3ff6e672ceb28ac53a1f254645d35168012

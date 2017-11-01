@@ -28,7 +28,7 @@
     "lint": "eslint src/**/*.js",
     "test": "npm run lint --silent && npm run test:unit --silent",
     "test:unit": "cross-env NODE_ENV=test LOG4JS_LEVEL='OFF' jest --coverage",
-    "semantic-release": "semantic-release pre && npm publish --access public && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "dependencies": {
     "babel-core": "^6.24.1",
@@ -71,7 +71,7 @@
     "jest": "^21.2.1",
     "nodemon": "^1.11.0",
     "prettier": "^1.5.3",
-    "semantic-release": "^8.0.3",
+    "semantic-release": "^8.2.0",
     "supertest": "^3.0.0"
   },
   "jest": {
