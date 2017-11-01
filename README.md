@@ -1,7 +1,7 @@
 <a href="https://ibm.biz/gramps-graphql"><img src="https://gramps-graphql.github.io/gramps-express/assets/img/gramps-banner.png" alt="GrAMPS · An easier way to manage the data sources powering your GraphQL server" width="450"></a>
 
-# GrAMPS GraphQL Middleware for Apollo Express Server
-[![license](https://img.shields.io/npm/l/@gramps/gramps-express.svg)](https://github.com/gramps-graphql/gramps-express/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/@gramps/gramps-express.svg?style=flat)](https://www.npmjs.com/package/@gramps/gramps-express) [![Build Status](https://travis-ci.org/gramps-graphql/gramps-express.svg?branch=master)](https://travis-ci.org/gramps-graphql/gramps-express) [![Maintainability](https://api.codeclimate.com/v1/badges/ac264833fac1fbd1afe0/maintainability)](https://codeclimate.com/github/gramps-graphql/gramps-express/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/ac264833fac1fbd1afe0/test_coverage)](https://codeclimate.com/github/gramps-graphql/gramps-express/test_coverage) [![Greenkeeper badge](https://badges.greenkeeper.io/gramps-graphql/gramps-express.svg)](https://greenkeeper.io/)
+# GrAMPS — Composable, Shareable Data Sources for GraphQL
+[![license](https://img.shields.io/npm/l/@gramps/gramps.svg)](https://github.com/gramps-graphql/gramps/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/@gramps/gramps.svg?style=flat)](https://www.npmjs.com/package/@gramps/gramps) [![Build Status](https://travis-ci.org/gramps-graphql/gramps.svg?branch=master)](https://travis-ci.org/gramps-graphql/gramps) [![Maintainability](https://api.codeclimate.com/v1/badges/ac264833fac1fbd1afe0/maintainability)](https://codeclimate.com/github/gramps-graphql/gramps/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/ac264833fac1fbd1afe0/test_coverage)](https://codeclimate.com/github/gramps-graphql/gramps/test_coverage) [![Greenkeeper badge](https://badges.greenkeeper.io/gramps-graphql/gramps.svg)](https://greenkeeper.io/)
 
 **An easier way to manage the data sources powering your GraphQL server.**
 
@@ -32,8 +32,7 @@ GrAMPS solves this problem by allowing each data source to be an independent rep
 2.  Check for local data sources specified in `GQL_DATA_SOURCES` or in the 
     `--data-source-dir` argument to the CLI command `gramps`
 3.  Merge all GrAMPS data sources into a single GraphQL schema
-4.  Attach the combined schema and context to the Express request
-5.  Use the GrAMPS schema and context in `graphqlExpress` to start the server
+4.  Return the GrAMPS schema and context for use with `graphqlExpress`
 
 ## Roadmap
 
