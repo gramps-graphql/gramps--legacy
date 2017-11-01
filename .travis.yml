@@ -1,0 +1,29 @@
+language: node_js
+cache:
+  yarn: true
+  directories:
+  - node_modules
+node_js:
+- "6"
+- "7"
+- "8"
+notifications:
+  email: false
+before_script:
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- ./cc-test-reporter before-build
+script:
+- yarn test
+after_script:
+- ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+after_success:
+- yarn build
+- yarn semantic-release
+branches:
+  only:
+  - master
+  - "/^greenkeeper/.*$/"
+env:
+  global:
+    - CC_TEST_REPORTER_ID=d8f5e73d0ee3db18fb0ce70d5ed430f91e5bbdea75080f85991d27aeb715f3c8

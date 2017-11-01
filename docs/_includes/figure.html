@@ -1,0 +1,8 @@
+<figure class="figure">
+  <img class="figure__image {% unless include.border == false %}figure__image--border{% endunless %} {% unless include.lightbox == false %}figure__image--lightbox{% endunless %}"
+       src="{{ site.github.url }}{{ include.src }}"
+       alt="{{ include.alt }}">
+  <figcaption class="figure__caption">
+    {{ include.caption }}
+  </figcaption>
+</figure>

@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'Helvetica Neue for IBM';
+  src: url('../fonts/medium/helvetica-neue-medium.eot?') format('eot'), url('../fonts/medium/helvetica-neue-medium.woff2') format('woff2'), url('../fonts/medium/helvetica-neue-medium.woff') format('woff'), url('../fonts/medium/helvetica-neue-medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue for IBM';
+  src: url('../fonts/medium-italic/helvetica-neue-medium-italic.eot?') format('eot'), url('../fonts/medium-italic/helvetica-neue-medium-italic.woff2') format('woff2'), url('../fonts/medium-italic/helvetica-neue-medium-italic.woff') format('woff'), url('../fonts/medium-italic/helvetica-neue-medium-italic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue for IBM';
+  src: url('../fonts/light/helvetica-neue-light.eot?') format('eot'), url('../fonts/light/helvetica-neue-light.woff2') format('woff2'), url('../fonts/light/helvetica-neue-light.woff') format('woff'), url('../fonts/light/helvetica-neue-light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue for IBM';
+  src: url('../fonts/light-italic/helvetica-neue-light-italic.eot?') format('eot'), url('../fonts/light-italic/helvetica-neue-light-italic.woff2') format('woff2'), url('../fonts/light-italic/helvetica-neue-light-italic.woff') format('woff'), url('../fonts/light-italic/helvetica-neue-light-italic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue for IBM';
+  src: url('../fonts/bold/helvetica-neue-bold.eot?') format('eot'), url('../fonts/bold/helvetica-neue-bold.woff2') format('woff2'), url('../fonts/bold/helvetica-neue-bold.woff') format('woff'), url('../fonts/bold/helvetica-neue-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/**
+ * Font Awesome is a bower dependency.
+ */
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../lib/font-awesome/fonts/fontawesome-webfont.eot?v=4.7.0');
+  src: url('../lib/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../lib/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../lib/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../lib/font-awesome/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../lib/font-awesome/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

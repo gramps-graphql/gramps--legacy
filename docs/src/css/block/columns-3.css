@@ -1,0 +1,16 @@
+.columns-3 {
+  /* TODO: Add older browser support. */
+  display: block;
+
+  @supports (display: flex) {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    &__item {
+      flex: 1 32%;
+      max-width: calc(100% / 3 - 0.5rem);
+      margin-top: 0;
+    }
+  }
+}

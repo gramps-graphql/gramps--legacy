@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Check if a development URL was supplied
+if [ -z "$1" ]; then
+  DEV_URL=""
+else
+  DEV_URL="--host $1"
+fi
+
+# Run the dev server and asset watcher in parallel.
+npm run watch & JEKYLL_ENV=development bundle exec jekyll serve $DEV_URL

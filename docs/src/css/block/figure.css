@@ -1,0 +1,32 @@
+.figure {
+  display: block;
+  width: 100%;
+  margin: 2rem 0;
+
+  &__image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border: 0;
+    border-radius: 6px;
+
+    &--border {
+      border: 1px solid var(--light-gray);
+    }
+
+    &--lightbox {
+      cursor: pointer;
+    }
+  }
+
+  &__caption {
+    margin: 0.5rem 1.5rem 0;
+    color: var(--mid-gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    line-height: 1rem;
+    text-align: center;
+  }
+}

@@ -1,0 +1,112 @@
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.4375rem;
+}
+
+h3 {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+}
+
+h4 {
+  margin-top: 2rem;
+  color: var(--heading-gray);
+  font-size: 1.125rem;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+}
+
+h5 {
+  margin-top: 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+h6 {
+  margin-top: 2rem;
+  color: var(--heading-gray);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+}
+
+blockquote {
+  padding-left: 1rem;
+  border-left: 4px solid var(--graphql-purple);
+}
+
+li {
+  margin-top: 0.25rem;
+
+  ul,
+  li {
+    margin-top: 0;
+  }
+
+  p {
+    margin: 0 0 0.75rem;
+  }
+}
+
+strong,
+b {
+  font-weight: var(--font-weight-bold);
+}
+
+/* We only use <i> elements for icons, so override the font-style. */
+i {
+  font-style: normal;
+}
+
+abbr {
+  border-bottom: 1px dotted var(--mid-gray);
+  cursor: help;
+  text-decoration: none;
+}
+
+pre {
+  background: var(--pretty-much-black);
+  padding: 1rem;
+  color: var(--light-purple-bg);
+  overflow-x: auto;
+}
+
+code {
+  background-color: var(--light-purple-bg);
+  border: 1px solid color(var(--light-purple-bg) blackness(+ 10%));
+  border-radius: 0.125em;
+  display: inline-block;
+  font-family: monospace;
+  font-size: 87.5%;
+  line-height: 1.1;
+  margin: 0 0.0675em;
+  padding: 0 0.125em;
+
+  pre &,
+  strong & {
+    background-color: transparent;
+    border: none;
+    display: inline;
+    font-size: 100%;
+    padding: 0;
+  }
+
+  strong & {
+    font-weight: 900;
+  }
+
+  * {
+    font-family: inherit;
+  }
+}
+
+@media (min-width: 1200px) {
+  pre {
+    width: 800px;
+  }
+}

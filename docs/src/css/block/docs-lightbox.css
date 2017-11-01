@@ -1,0 +1,60 @@
+.docs-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  background: color(var(--pretty-much-black) alpha(75%));
+  opacity: 1;
+  transition: opacity 200ms linear;
+  z-index: 1000;
+
+  &--disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__image-wrap {
+    display: block;
+    max-width: 90%;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 1px 10px color(var(--pretty-much-black) alpha(95%));
+    padding: 0.5rem;
+  }
+
+  &__image {
+    border-radius: 6px;
+    display: block;
+    max-width: 100%;
+    max-height: 90vh;
+  }
+
+  &__close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: block;
+    width: 1.75rem;
+    height: 2rem;
+    margin: 0;
+    color: var(--white);
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: -9999px;
+
+    &::after {
+      content: '\00D7';
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 2.5rem;
+      font-weight: 900;
+      text-indent: 0;
+    }
+  }
+}

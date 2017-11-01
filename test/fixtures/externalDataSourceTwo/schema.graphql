@@ -1,0 +1,8 @@
+extend type Query {
+  ExternalTwo(bar: Int): ExternalTwo
+}
+
+type ExternalTwo {
+  id: Int,
+  name: String,
+}

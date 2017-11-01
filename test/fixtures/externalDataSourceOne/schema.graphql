@@ -1,0 +1,8 @@
+extend type Query {
+  ExternalOne(foo: Int): ExternalOne
+}
+
+type ExternalOne {
+  id: Int,
+  name: String,
+}

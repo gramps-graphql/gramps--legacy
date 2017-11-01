@@ -1,0 +1,36 @@
+.banner {
+  padding: 0.75rem;
+  border: 1px solid var(--light-gray);
+  box-shadow: 0 3px 3px color(var(--pretty-much-black) alpha(10%));
+  text-align: center;
+
+  &__heading {
+    color: var(--pretty-much-black);
+    font-size: 1.125rem;
+  }
+
+  &__heading-link {
+    display: block;
+    color: currentColor;
+    text-decoration: none;
+
+    /*
+     * This depends on the `.u-icon` utility class.
+     */
+    &::before {
+      display: block;
+      width: 50px;
+      height: 50px;
+      margin: 0.5rem auto;
+      background: var(--graphql-purple);
+      border-radius: 50%;
+      color: var(--white);
+      font-size: 1.625rem;
+      line-height: 3.125rem;
+    }
+  }
+
+  &__button {
+    display: block;
+  }
+}

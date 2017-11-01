@@ -1,0 +1,16 @@
+default:
+  title: GrAMPS for Apollo GraphQL Express Server
+  icon: space-shuttle
+  hidden: true
+
+overview:
+  title: Overview
+  icon: rocket
+
+data-source:
+  title: Data Sources
+  icon: database
+
+api:
+  title: API Documentation
+  icon: code

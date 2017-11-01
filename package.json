@@ -1,0 +1,104 @@
+{
+  "name": "@gramps/gramps-express",
+  "version": "0.0.0-development",
+  "description": "GraphQL Microservice Pattern Server",
+  "main": "dist/index.js",
+  "files": [
+    "dist/",
+    "config/",
+    "bin/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gramps-graphql/gramps-express.git"
+  },
+  "contributors": [
+    "Jason Lengstorf <jason.lengstorf@ibm.com>"
+  ],
+  "license": "MIT",
+  "bin": {
+    "gramps": "bin/gramps.js"
+  },
+  "scripts": {
+    "prepush": "npm test",
+    "serve": "cross-env BABEL_DISABLE_CACHE=1 nodemon -e js,json,graphql src/dev/server.js --exec babel-node",
+    "prebuild": "del-cli ./dist",
+    "build": "babel src -d dist && cpy \"**/*.graphql\" \"../dist/\" --cwd=src --parents",
+    "start": "cross-env NODE_ENV=production node dist/server.js",
+    "lint": "eslint src/**/*.js",
+    "test": "npm run lint --silent && npm run test:unit --silent",
+    "test:unit": "cross-env NODE_ENV=test LOG4JS_LEVEL='OFF' jest --coverage",
+    "semantic-release": "semantic-release pre && npm publish --access public && semantic-release post"
+  },
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "body-parser": "^1.17.1",
+    "chalk": "^2.1.0",
+    "cross-env": "^5.1.1",
+    "dataloader": "^1.3.0",
+    "express": "^4.15.4",
+    "globby": "^6.1.0",
+    "graphql-apollo-errors": "^2.0.2",
+    "request-promise": "^4.2.1",
+    "shelljs": "^0.7.8",
+    "uuid": "^3.1.0",
+    "yargs": "^9.0.1"
+  },
+  "peerDependencies": {
+    "apollo-server-express": "^1.1.2",
+    "graphql": "^0.9.0 || ^0.10.0 || ^0.11.0",
+    "graphql-tools": "^1.2.1 || ^2.5.1"
+  },
+  "devDependencies": {
+    "apollo-server-express": "^1.1.2",
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^8.0.1",
+    "babel-jest": "^21.2.0",
+    "babel-plugin-inline-import": "^2.0.6",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "condition-travis-enterprise": "^1.0.0",
+    "cpy-cli": "^1.0.1",
+    "del-cli": "^1.0.0",
+    "eslint": "^4.2.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-prettier": "^2.1.2",
+    "get-port": "^3.2.0",
+    "graphql-tools": "^2.5.0",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "nodemon": "^1.11.0",
+    "prettier": "^1.5.3",
+    "semantic-release": "^8.0.3",
+    "supertest": "^3.0.0"
+  },
+  "jest": {
+    "coverageReporters": [
+      "json",
+      "text",
+      "lcov"
+    ],
+    "collectCoverageFrom": [
+      "{src,bin}/**/*.js",
+      "!bin/gramps.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  },
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "keywords": [
+    "graphql",
+    "apollo"
+  ]
+}

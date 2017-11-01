@@ -1,0 +1,15 @@
+{
+  "presets": [
+    "stage-2",
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
+  ],
+  "plugins": ["babel-plugin-inline-import"],
+  "ignore": ["node_modules/**"]
+}

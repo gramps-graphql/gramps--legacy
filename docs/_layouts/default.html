@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <title>{{ site.title }}</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ site.github.url }}/assets/img/favicon/apple-touch-icon.png?v2">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ site.github.url }}/assets/img/favicon/favicon-32x32.png?v2">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ site.github.url }}/assets/img/favicon/favicon-16x16.png?v2">
+  <link rel="manifest" href="{{ site.github.url }}/assets/img/favicon/manifest.json">
+  <link rel="mask-icon" href="{{ site.github.url }}/assets/img/favicon/safari-pinned-tab.svg?v2" color="#e10098">
+  <link rel="shortcut icon" href="{{ site.github.url }}/assets/img/favicon/favicon.ico?v2">
+  <meta name="apple-mobile-web-app-title" content="GrAMPS">
+  <meta name="application-name" content="GrAMPS">
+  <meta name="msapplication-config" content="{{ site.github.url }}/assets/img/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="{{ site.github.url }}/assets/css/main.css"></link>
+</head>
+
+<body>
+  <div class="app-chrome">
+    <header class="app-chrome__header">
+      <a href="{{ site.github.url }}/" class="logo" rel="home">
+        <img src="{{ site.github.url }}/assets/img/GrAMPS-logo.svg" alt="GrAMPS GraphQL" class="logo__image">
+        <span class="logo__text">{{ site.logo_tag }}</span>
+      </a>
+    </header>
+    <main class="content app-chrome__main-content">
+      <nav class="content__nav">
+        <a class="content__nav-link u-icon u-icon--before u-icon--question" href="{{ site.github.url }}/support">
+          Get Support
+        </a>
+        <a class="content__nav-link u-icon u-icon--before u-icon--pencil" href="{{ site.github_repo }}/edit/{{ site.github_branch | default: 'gh-pages' }}/{{ page.path }}">
+          Edit This Page
+        </a>
+      </nav>
+
+      {{ content }}
+    </main>
+    {% include partials/sidebar.html %}
+  </div>
+  {% include partials/lightbox.html %}
+  <script src="{{ site.github.url }}/assets/js/main.min.js"></script> {% if jekyll.environment != 'production' %}
+  <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+      ':35729/livereload.js?snipver=1"></' + 'script>')
+  </script> {% endif %}
+</body>
+
+</html>

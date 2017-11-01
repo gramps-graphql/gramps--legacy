@@ -1,0 +1,22 @@
+.u-button {
+  display: inline-block;
+  padding: 0 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 2rem;
+  text-decoration: none;
+
+  &--main {
+    border: 2px solid var(--dark-purple);
+    color: var(--dark-purple);
+    transition: 150ms all linear;
+
+    &:focus,
+    &:hover,
+    &:active {
+      background-color: var(--graphql-purple);
+      border-color: var(--graphql-purple);
+      color: var(--white);
+    }
+  }
+}

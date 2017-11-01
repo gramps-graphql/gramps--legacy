@@ -1,0 +1,16 @@
+.sidebar {
+  &__container {
+    position: fixed;
+    height: 100%;
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+    background-color: var(--light-purple-bg);
+    border-right: 1px solid var(--light-gray);
+    overflow-y: auto;
+  }
+
+  &__group {
+    width: 300px;
+    padding: 0 1rem;
+  }
+}

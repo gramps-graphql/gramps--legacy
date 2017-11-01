@@ -1,0 +1,214 @@
+.content {
+  position: relative;
+  padding-top: 3rem;
+
+  &__nav {
+    position: absolute;
+    top: 0.5rem;
+    left: 300px;
+    max-width: 40.5rem;
+    width: 100%;
+    padding-left: 6rem;
+    text-align: right;
+  }
+
+  &__nav-link {
+    display: inline-block;
+    margin: 0 0.25rem;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    text-decoration: none;
+
+    &:focus,
+    &:hover,
+    &:active {
+      background: var(--pinkish-purple-bg);
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &::before {
+      margin-right: 0.125rem;
+    }
+  }
+
+  &__header {
+    position: relative;
+    max-width: 40.5rem;
+    padding-left: 6rem;
+    padding-top: 3.25rem;
+
+    /*
+     * This depends on the `.u-icon` utility class.
+     */
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 1rem;
+      width: 7rem;
+      height: 7rem;
+      background: var(--pinkish-purple-bg);
+      border-radius: 50%;
+      color: var(--white);
+      font-size: 4rem;
+      line-height: 7rem;
+      text-align: center;
+      z-index: 1;
+    }
+  }
+
+  &__section {
+    position: relative;
+    color: var(--graphql-purple);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2rem;
+    line-height: 1rem;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+
+  &__heading {
+    position: relative;
+    margin-top: 0;
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 2rem;
+    z-index: 2;
+  }
+
+  &__body-text {
+    max-width: 40.5rem;
+    padding-left: 6rem;
+
+    /*
+     * This is where shit gets weird: this is where user-generated content lives
+     * in the app, so we have to do some CSS gymnastics to style it.
+     *
+     * Forgive me for what I’m about to do in here.
+     */
+    > p:first-child {
+      font-size: 1.125rem;
+    }
+
+    h2 {
+      margin-top: 3rem;
+      color: var(--pretty-much-black);
+      font-size: 1.4375rem;
+    }
+
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      /* Styling for links added by `/src/js/lib/link-headings.js`. */
+      .link-headings__permalink {
+        position: relative;
+        color: inherit;
+        text-decoration: none;
+
+        &::before {
+          content: var(--icon-link);
+          position: absolute;
+          top: 50%;
+          left: -1.5rem;
+          transform: translateY(-40%);
+          color: var(--mid-gray);
+          font-family: var(--icon-font-family);
+          font-size: 0.875rem;
+          opacity: 0;
+          transition: 100ms opacity linear;
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+          &::before { opacity: 1; }
+        }
+      }
+    }
+
+    a {
+      font-weight: inherit;
+    }
+
+    table,
+    thead,
+    tbody {
+      display: block;
+    }
+
+    table {
+      min-width: 648px;
+      width: calc(100vw - 492px);
+    }
+
+    thead,
+    tbody {
+      margin-top: 0;
+    }
+
+    thead {
+      border-bottom: 1px solid var(--graphql-purple);
+    }
+
+    tr {
+      display: flex;
+      margin-top: 0;
+      padding: 0 0.25rem;
+
+      &:nth-child(even) {
+        background-color: var(--light-purple-bg);
+      }
+    }
+
+    th {
+      font-weight: var(--font-weight-bold);
+      text-align: left;
+    }
+
+    th,
+    td {
+      display: block;
+      flex: 1;
+      width: 100px;
+      min-width: 0;
+      max-width: 175px;
+      margin-top: 0;
+      margin-left: 0.5rem;
+      padding: 0.5rem;
+      overflow-x: scroll;
+      border-spacing: 10px;
+      border-collapse: separate;
+
+      &:last-child {
+        flex: 1;
+        width: 350px;
+        max-width: 50%;
+      }
+    }
+  }
+
+  &__back-link {
+    display: block;
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    &::before {
+      content: var(--icon-angle-left) ' ';
+      font-family: var(--icon-font-family);
+    }
+  }
+
+  &__banners {
+    max-width: 40.5rem;
+    margin-top: 2rem;
+    padding-left: 6rem;
+  }
+}

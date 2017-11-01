@@ -1,0 +1,30 @@
+.app-chrome {
+  position: relative;
+  display: block;
+  height: 100vh;
+
+  &__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    background: var(--light-purple-bg);
+    z-index: 10;
+  }
+
+  &__main-content {
+    position: relative;
+    margin-top: 0;
+    padding-bottom: 4rem;
+    padding-left: 300px;
+    overflow-y: auto;
+  }
+
+  &__sidebar {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 300px;
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,68 @@
+{% comment %}
+  To start, we need to figure out which section the page belongs to.
+{% endcomment %}
+{% if page.section %}
+
+  {% comment %}
+    If the section is explicitly set, use that.
+  {% endcomment %}
+  {% assign section = page.section %}
+{% else %}
+
+  {% comment %}
+    If no section is provided, try to extract it from the URL. Start with the
+    deepest level and work backward, looking for an existing section that
+    matches the fragment.
+
+    For example, if the page is located at /one/two/three/, we check for a
+    section called "three", then one called "two", and finally for "one". We
+    stop checking at the first match.
+  {% endcomment %}
+  {% assign fragments = page.url | split: "/" | slice: 1, 6 | reverse %}
+  {% for fragment in fragments %}
+    {% if site.data.sections[fragment] %}
+      {% assign section = fragment %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% comment %}
+    If no section is set and we can’t detect one, use the default.
+  {% endcomment %}
+  {% unless section %}
+    {% assign section = "default" %}
+  {% endunless %}
+{% endif %}
+
+{% comment %}
+  Now that we have our section, we actually load it from the site data.
+{% endcomment %}
+{% assign current_section = site.data.sections[section] %}
+
+{% comment %}
+  Next, we need to get the appropriate icon.
+{% endcomment %}
+{% if page.icon %}
+
+  {% comment %}
+    We give precedence to explicitly-set icons.
+  {% endcomment %}
+  {% assign page_icon = page.icon %}
+{% else if current_section.icon %}
+
+  {% comment %}
+    If there’s no icon set, grab the icon for the section.
+  {% endcomment %}
+  {% assign page_icon = current_section.icon %}
+{% else %}
+
+  {% comment %}
+    If all else fails, just show a picture of a fuckin’ book, okay?
+  {% endcomment %}
+  {% assign page_icon = 'book' %}
+{% endif %}
+
+<header class="content__header u-icon u-icon--after u-icon--{{ page_icon }}">
+  <p class="content__section">{{ current_section.title }}</p>
+  <h1 class="content__heading">{{ page.title }}</h1>
+</header>

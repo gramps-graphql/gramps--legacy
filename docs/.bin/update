@@ -1,0 +1,42 @@
+#!/bin/bash
+
+UPSTREAM_REPO=git@github.ibm.com:jason-lengstorf/docs-starter.git
+UPSTREAM_BRANCH=gh-pages
+
+# Verify that the upstream remote is set.
+if git ls-remote upstream > /dev/null; then
+  echo 'Upstream branch found.'
+else
+  echo 'Setting the upstream branch...'
+  git remote add upstream $UPSTREAM_REPO
+fi
+
+REMOTE_URL=$(git config remote.upstream.url)
+
+echo "Fetching from $REMOTE_URL"
+
+# Grab the latest version of the docs framework, but DO NOT COMMIT.
+git fetch upstream
+git merge --no-commit --no-ff upstream/master $UPSTREAM_BRANCH
+
+# Reset the site content.
+echo '
+Refusing upstream changes to:
+- _content/
+- _data/
+- index.md
+- _config.yml
+'
+git reset -- _content/ _data/ index.md _config.yml
+
+# Make sure we don’t inadvertently break sections.yml
+git checkout -- _data/sections.yml
+
+# Commit the changes.
+git commit -m 'chore: merge the latest changes from the docs framework'
+
+echo "
+Update complete. Please see the changelog for
+$REMOTE_URL
+to see if any changes are required for _config.yml
+"

@@ -1,0 +1,23 @@
+.logo {
+  position: relative;
+  display: block;
+  line-height: 4rem;
+  text-decoration: none;
+
+  &__image {
+    display: inline-block;
+    margin-right: 0.5rem;
+    max-height: 4rem;
+    vertical-align: bottom;
+  }
+
+  &__text {
+    display: inline-block;
+    vertical-align: bottom;
+    margin-top: 0;
+    color: var(--pretty-much-black);
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 4rem;
+  }
+}

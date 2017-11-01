@@ -1,0 +1,18 @@
+---
+layout: default
+---
+
+  {% include partials/page-header.html %}
+  <section class="content__body-text">
+    {{ content }}
+
+    {% if page.section == "event" %}
+      <a href="/data/events/"
+         class="content__back-link">back to all events</a>
+    {% endif %}
+
+    {% if page.section == "attribute" %}
+      <a href="/data/attributes/"
+         class="content__back-link">back to all attributes</a>
+    {% endif %}
+  </section>
