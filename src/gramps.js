@@ -1,3 +1,4 @@
+import { GraphQLSchema } from 'graphql';
 import {
   makeExecutableSchema,
   addMockFunctionsToSchema,
@@ -92,7 +93,7 @@ export default function gramps(
       }
       return schema;
     })
-    .filter(e => !!e);
+    .filter(schema => schema instanceof GraphQLSchema);
 
   const schema = mergeSchemas({ schemas });
 
