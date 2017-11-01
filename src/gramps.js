@@ -73,21 +73,26 @@ export default function gramps(
   });
 
   const allSources = [rootSource, ...sources];
-  const schemas = allSources.map(({ schema: typeDefs, resolvers, mocks }) => {
-    const schema = makeExecutableSchema({
-      typeDefs,
-      resolvers,
-      ...apolloOptions.makeExecutableSchema,
-    });
-    if (enableMockData) {
-      addMockFunctionsToSchema({
-        schema,
-        mocks,
-        ...apolloOptions.addMockFunctionsToSchema,
+  const schemas = allSources
+    .map(({ schema: typeDefs, resolvers, mocks }) => {
+      if (!typeDefs) {
+        return null;
+      }
+      const schema = makeExecutableSchema({
+        typeDefs,
+        resolvers,
+        ...apolloOptions.makeExecutableSchema,
       });
-    }
-    return schema;
-  });
+      if (enableMockData) {
+        addMockFunctionsToSchema({
+          schema,
+          mocks,
+          ...apolloOptions.addMockFunctionsToSchema,
+        });
+      }
+      return schema;
+    })
+    .filter(e => !!e);
 
   const schema = mergeSchemas({ schemas });
 
