@@ -1,8 +1,14 @@
-import { getSchema, addMockFunctions } from './lib/configureSchema';
+import {
+  makeExecutableSchema,
+  addMockFunctionsToSchema,
+  mergeSchemas,
+} from 'graphql-tools';
 import {
   loadDevDataSources,
   overrideLocalSources,
 } from './lib/externalDataSources';
+
+import rootSource from './rootSource';
 
 /**
  * Adds supplied options to the Apollo options object.
@@ -65,19 +71,25 @@ export default function gramps(
     devSources,
     logger,
   });
-  const schema = getSchema({
-    sources,
-    logger,
-    options: apolloOptions.makeExecutableSchema,
+
+  const allSources = [rootSource, ...sources];
+  const schemas = allSources.map(({ schema: typeDefs, resolvers, mocks }) => {
+    const schema = makeExecutableSchema({
+      typeDefs,
+      resolvers,
+      ...apolloOptions.makeExecutableSchema,
+    });
+    if (enableMockData) {
+      addMockFunctionsToSchema({
+        schema,
+        mocks,
+        ...apolloOptions.addMockFunctionsToSchema,
+      });
+    }
+    return schema;
   });
 
-  if (enableMockData) {
-    addMockFunctions({
-      schema,
-      sources,
-      options: apolloOptions.addMockFunctionsToSchema,
-    });
-  }
+  const schema = mergeSchemas({ schemas });
 
   const context = sources.reduce(
     (models, source) => ({
