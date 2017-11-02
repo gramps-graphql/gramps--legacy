@@ -80,13 +80,12 @@ const mapSourcesToExecutableSchemas = (sources, mock, options) =>
  * @param  {Function?} config.extraContext    function to add additional context
  * @param  {Object?}   config.logger          requires `info` & `error` methods
  * @param  {Object?}   config.apollo          options for Apollo functions
- * @return {Object}                           result of `graphqlExpress()`
+ * @return {Function}                         req => options for `graphqlExpress()`
  */
 export default function gramps(
   {
     dataSources = [],
     enableMockData = process.env.GRAMPS_MODE !== 'live',
-    req = {},
     extraContext = req => ({}), // eslint-disable-line no-unused-vars
     logger = console,
     apollo = {},
@@ -110,19 +109,20 @@ export default function gramps(
   );
   const schema = mergeSchemas({ schemas });
 
-  const context = sources.reduce((models, source) => {
-    const model =
-      typeof source.model === 'function' ? source.model(req) : source.model;
-    return {
-      ...models,
-      [source.namespace]: model,
-    };
-  }, extraContext(req));
+  const getContext = req =>
+    sources.reduce((models, source) => {
+      const model =
+        typeof source.model === 'function' ? source.model(req) : source.model;
+      return {
+        ...models,
+        [source.namespace]: model,
+      };
+    }, extraContext(req));
 
-  return {
+  return req => ({
     schema,
-    context,
+    context: getContext(req),
     // formatError: formatError(logger),
     ...apolloOptions.graphqlExpress,
-  };
+  });
 }

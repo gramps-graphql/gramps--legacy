@@ -13,7 +13,7 @@ describe('GrAMPS', () => {
         { namespace: 'Baz', model: req => ({ baz: 'test' }) },
       ];
 
-      const grampsConfig = gramps({ dataSources });
+      const grampsConfig = gramps({ dataSources })();
 
       expect(grampsConfig.context).toEqual({
         Foo: {
@@ -31,7 +31,7 @@ describe('GrAMPS', () => {
     it('properly adds extra context', () => {
       const grampsConfig = gramps({
         extraContext: () => ({ extra: 'test' }),
-      });
+      })();
 
       expect(grampsConfig.context).toEqual({
         extra: 'test',
