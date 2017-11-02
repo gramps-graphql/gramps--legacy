@@ -8,6 +8,7 @@ import {
   loadDevDataSources,
   overrideLocalSources,
 } from './lib/externalDataSources';
+import mapResolvers from './lib/mapResolvers';
 
 import rootSource from './rootSource';
 
@@ -31,13 +32,13 @@ const getDefaultApolloOptions = options => ({
 */
 const mapSourcesToExecutableSchemas = (sources, mock, options) =>
   sources
-    .map(({ schema: typeDefs, resolvers, mocks }) => {
+    .map(({ schema: typeDefs, resolvers, mocks, namespace }) => {
       if (!typeDefs) {
         return null;
       }
       const schema = makeExecutableSchema({
         typeDefs,
-        resolvers,
+        resolvers: mapResolvers(namespace, resolvers),
         ...options.makeExecutableSchema,
       });
       if (mock) {
