@@ -10,6 +10,7 @@ describe('GrAMPS', () => {
       const dataSources = [
         { namespace: 'Foo', model: { foo: 'test' } },
         { namespace: 'Bar', model: { bar: 'test' } },
+        { namespace: 'Baz', model: req => ({ baz: 'test' }) },
       ];
 
       const grampsConfig = gramps({ dataSources });
@@ -20,6 +21,9 @@ describe('GrAMPS', () => {
         },
         Bar: {
           bar: 'test',
+        },
+        Baz: {
+          baz: 'test',
         },
       });
     });
