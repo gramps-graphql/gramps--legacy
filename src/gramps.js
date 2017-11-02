@@ -10,6 +10,7 @@ import {
 } from './lib/externalDataSources';
 
 import rootSource from './rootSource';
+import combineStitchingResolvers from './lib/combineStitchingResolvers';
 
 /**
  * Adds supplied options to the Apollo options object.
@@ -108,7 +109,17 @@ export default function gramps(
     enableMockData,
     apolloOptions,
   );
-  const schema = mergeSchemas({ schemas });
+
+  const sourcesWithStitching = sources.filter(source => source.stitching);
+  const linkTypeDefs = sourcesWithStitching.map(
+    source => source.stitching.linkTypeDefs,
+  );
+  const resolvers = combineStitchingResolvers(sourcesWithStitching);
+
+  const schema = mergeSchemas({
+    schemas: [...schemas, ...linkTypeDefs],
+    resolvers,
+  });
 
   const context = sources.reduce((models, source) => {
     const model =
