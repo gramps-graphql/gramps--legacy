@@ -97,13 +97,14 @@ export default function gramps(
 
   const schema = mergeSchemas({ schemas });
 
-  const context = sources.reduce(
-    (models, source) => ({
+  const context = sources.reduce((models, source) => {
+    const model =
+      typeof source.model === 'function' ? source.model(req) : source.model;
+    return {
       ...models,
-      [source.namespace]: source.model,
-    }),
-    extraContext(req),
-  );
+      [source.namespace]: model,
+    };
+  }, extraContext(req));
 
   return {
     schema,
