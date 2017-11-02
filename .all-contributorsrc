@@ -1,0 +1,23 @@
+{
+  "projectName": "gramps",
+  "projectOwner": "gramps-graphql",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "jlengstorf",
+      "name": "Jason Lengstorf",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/163561?v=4",
+      "profile": "https://code.lengstorf.com",
+      "contributions": [
+        "code",
+        "design",
+        "doc",
+        "talk"
+      ]
+    }
+  ]
+}
