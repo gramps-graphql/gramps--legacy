@@ -23,6 +23,35 @@ const getDefaultApolloOptions = options => ({
 });
 
 /**
+* Maps data sources and returns array of executable schema
+* @param  {Array}   sources  data sources to combine
+* @param  {Boolean} mock     whether or not to mock resolvers
+* @param  {Object}  options  additional apollo options
+* @return {Array}            list of executable schemas
+*/
+const mapSourcesToExecutableSchemas = (sources, mock, options) =>
+  sources
+    .map(({ schema: typeDefs, resolvers, mocks }) => {
+      if (!typeDefs) {
+        return null;
+      }
+      const schema = makeExecutableSchema({
+        typeDefs,
+        resolvers,
+        ...options.makeExecutableSchema,
+      });
+      if (mock) {
+        addMockFunctionsToSchema({
+          schema,
+          mocks,
+          ...options.addMockFunctionsToSchema,
+        });
+      }
+      return schema;
+    })
+    .filter(schema => schema instanceof GraphQLSchema);
+
+/**
  * Combine schemas, optionally add mocks, and configure `apollo-server-express`.
  *
  * This is the core of GrAMPS, and does a lot. It accepts an array of data
@@ -74,36 +103,21 @@ export default function gramps(
   });
 
   const allSources = [rootSource, ...sources];
-  const schemas = allSources
-    .map(({ schema: typeDefs, resolvers, mocks }) => {
-      if (!typeDefs) {
-        return null;
-      }
-      const schema = makeExecutableSchema({
-        typeDefs,
-        resolvers,
-        ...apolloOptions.makeExecutableSchema,
-      });
-      if (enableMockData) {
-        addMockFunctionsToSchema({
-          schema,
-          mocks,
-          ...apolloOptions.addMockFunctionsToSchema,
-        });
-      }
-      return schema;
-    })
-    .filter(schema => schema instanceof GraphQLSchema);
-
+  const schemas = mapSourcesToExecutableSchemas(
+    allSources,
+    enableMockData,
+    apolloOptions,
+  );
   const schema = mergeSchemas({ schemas });
 
-  const context = sources.reduce(
-    (models, source) => ({
+  const context = sources.reduce((models, source) => {
+    const model =
+      typeof source.model === 'function' ? source.model(req) : source.model;
+    return {
       ...models,
-      [source.namespace]: source.model,
-    }),
-    extraContext(req),
-  );
+      [source.namespace]: model,
+    };
+  }, extraContext(req));
 
   return {
     schema,
