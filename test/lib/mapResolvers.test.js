@@ -16,4 +16,14 @@ describe('lib/mapResolvers', () => {
   it('return undefined if given non-object', () => {
     expect(mapResolvers('namespace', undefined)).toEqual(undefined);
   });
+
+  it('throws error for non-function resolvers', () => {
+    expect(() => {
+      mapResolvers('namespace', {
+        Query: {
+          hello: 'non-function resolver',
+        },
+      });
+    }).toThrow();
+  });
 });
