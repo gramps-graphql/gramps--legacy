@@ -1,3 +1,4 @@
+import { GraphQLSchema } from 'graphql';
 import gramps from '../src/gramps';
 
 describe('GrAMPS', () => {
@@ -6,6 +7,17 @@ describe('GrAMPS', () => {
   });
 
   describe('gramps()', () => {
+    it('creates a valid schema and empty context with no arguments', () => {
+      const getGrampsContext = gramps();
+
+      expect(getGrampsContext()).toEqual(
+        expect.objectContaining({
+          schema: expect.any(GraphQLSchema),
+          context: {},
+        }),
+      );
+    });
+
     it('properly combines contexts', () => {
       const dataSources = [
         { namespace: 'Foo', model: { foo: 'test' } },
