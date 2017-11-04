@@ -1,5 +1,5 @@
 {
-  "name": "@gramps/gramps-express",
+  "name": "@gramps/gramps",
   "version": "0.0.0-development",
   "description": "GraphQL Microservice Pattern Server",
   "main": "dist/index.js",
@@ -10,10 +10,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/gramps-graphql/gramps-express.git"
+    "url": "https://github.com/gramps-graphql/gramps.git"
   },
   "contributors": [
-    "Jason Lengstorf <jason.lengstorf@ibm.com>"
+    "Jason Lengstorf <jason.lengstorf@ibm.com>",
+    "Eric Wyne <ecwyne@gmail.com>"
   ],
   "license": "MIT",
   "bin": {
