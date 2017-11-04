@@ -27,30 +27,15 @@ GrAMPS solves this problem by allowing each data source to be an independent rep
  -  Allow local development with optional local overrides of data sources
  -  Improve error reporting with optional error handling
 
-### How GrAMPS Works
-1.  Import each GrAMPS data source as an npm package
-2.  Check for local data sources specified in `GQL_DATA_SOURCES` or in the 
-    `--data-source-dir` argument to the CLI command `gramps`
-3.  Merge all GrAMPS data sources into a single GraphQL schema
-4.  Return the GrAMPS schema and context for use with `graphqlExpress`
-
 ## Roadmap
 
 - [ ] Write a [data source](https://github.com/gramps-graphql/data-source-base) tutorial (#21, WIP at #22)
 - [ ] Write a developer quickstart (#23)
 - [ ] Add API docs (#24)
 - [ ] Write docs about how error handling works (#25)
-- [ ] Add a Redis add-on (#26)
-- [ ] Add simpler cache key override (#27)
 - [ ] Define a pattern for direct database access (#28)
-- [ ] Add [all-contributors](https://github.com/kentcdodds/all-contributors) (#29)
+- [x] Add [all-contributors](https://github.com/kentcdodds/all-contributors) (#29)
 - [ ] Add integration test examples/docs with [Cypress](https://www.cypress.io/) (#30)
-
-## Credits
-
-GrAMPS was born at [IBM Cloud](https://www.ibm.com/cloud-computing/) to solve the problem of maintaining a single GraphQL endpoint in a µ-service architecture where data sources are owned by dozens of teams.
-
-We’re releasing it under the MIT license because we ❤️ the developer community.
 
 ## Contributors
 
@@ -62,3 +47,9 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
+
+## Credits
+
+GrAMPS was born at [IBM Cloud](https://www.ibm.com/cloud-computing/) to solve the problem of maintaining a single GraphQL endpoint in a µ-service architecture where data sources are owned by dozens of teams.
+
+We’re releasing it under the [MIT license](https://github.com/gramps-graphql/gramps/blob/master/LICENSE) because we ❤️ the developer community.
