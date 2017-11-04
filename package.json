@@ -25,7 +25,7 @@
     "serve": "cross-env BABEL_DISABLE_CACHE=1 nodemon -e js,json,graphql src/dev/server.js --exec babel-node",
     "prebuild": "del-cli ./dist",
     "build": "babel src -d dist && cpy \"**/*.graphql\" \"../dist/\" --cwd=src --parents",
-    "start": "cross-env NODE_ENV=production node dist/server.js",
+    "start": "cross-env NODE_ENV=production node dist/dev/server.js",
     "lint": "eslint src/**/*.js",
     "test": "npm run lint --silent && npm run test:unit --silent",
     "test:unit": "cross-env NODE_ENV=test LOG4JS_LEVEL='OFF' jest --coverage",
