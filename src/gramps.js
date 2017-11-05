@@ -24,6 +24,20 @@ const getDefaultApolloOptions = options => ({
   ...options,
 });
 
+const getExecutableSchema = (source, options) => {
+  const { schema, typeDefs, resolvers, namespace } = source;
+  if (schema instanceof GraphQLSchema) {
+    return schema;
+  } else if (typeof schema === 'string' || typeof typeDefs === 'string') {
+    return makeExecutableSchema({
+      typeDefs: typeDefs || schema,
+      resolvers: mapResolvers(namespace, resolvers),
+      ...options.makeExecutableSchema,
+    });
+  } else {
+    return null;
+  }
+};
 /**
 * Maps data sources and returns array of executable schema
 * @param  {Array}   sources  data sources to combine
@@ -33,23 +47,18 @@ const getDefaultApolloOptions = options => ({
 */
 const mapSourcesToExecutableSchemas = (sources, mock, options) =>
   sources
-    .map(({ schema: typeDefs, resolvers, mocks, namespace }) => {
-      if (!typeDefs) {
-        return null;
-      }
-      const schema = makeExecutableSchema({
-        typeDefs,
-        resolvers: mapResolvers(namespace, resolvers),
-        ...options.makeExecutableSchema,
-      });
-      if (mock) {
+    .map(source => {
+      const { schema, typeDefs, resolvers, mocks } = source;
+      const executableSchema = getExecutableSchema(source, options);
+
+      if (executableSchema && mock) {
         addMockFunctionsToSchema({
-          schema,
+          schema: executableSchema,
           mocks,
           ...options.addMockFunctionsToSchema,
         });
       }
-      return schema;
+      return executableSchema;
     })
     .filter(schema => schema instanceof GraphQLSchema);
 
