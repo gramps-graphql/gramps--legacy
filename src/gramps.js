@@ -37,7 +37,7 @@ const mapSourcesToExecutableSchemas = (sources, mock, options) =>
       let executableSchema;
       if (schema instanceof GraphQLSchema) {
         executableSchema = schema;
-      } else if (typeof schema === 'string' || typeof typeDefs == 'string'){
+      } else if (typeof schema === 'string' || typeof typeDefs === 'string') {
         executableSchema = makeExecutableSchema({
           typeDefs: typeDefs || schema,
           resolvers: mapResolvers(namespace, resolvers),
