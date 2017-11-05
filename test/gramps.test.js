@@ -1,4 +1,5 @@
 import { GraphQLSchema } from 'graphql';
+import { makeExecutableSchema } from 'graphql-tools';
 import gramps from '../src/gramps';
 
 describe('GrAMPS', () => {
@@ -22,6 +23,16 @@ describe('GrAMPS', () => {
       const dataSources = [
         { namespace: 'Foo', model: { foo: 'test' } },
         { namespace: 'Bar', model: { bar: 'test' } },
+        {
+          schema: makeExecutableSchema({
+            typeDefs: 'type Query { me: String }',
+            resolvers: {
+              Query: {
+                me: () => 'test name',
+              },
+            },
+          }),
+        },
         {
           namespace: 'Baz',
           schema: 'type User { name: String } type Query { me: User }',
