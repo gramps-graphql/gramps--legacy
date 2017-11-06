@@ -24,6 +24,19 @@ const getDefaultApolloOptions = options => ({
   ...options,
 });
 
+const checkTypeDefs = ({ schema, typeDefs, namespace }) => {
+  if (typeof schema === 'string') {
+    console.warn(
+      namespace,
+      'Type definitions must be exported as "typeDefs".',
+      'Use of "schema" has been deprecated and will be removed in a future release',
+    );
+    return typeDefs || schema;
+  } else {
+    return typeDefs;
+  }
+};
+
 /**
 * Maps data sources and returns array of executable schema
 * @param  {Array}   sources  data sources to combine
@@ -34,14 +47,7 @@ const getDefaultApolloOptions = options => ({
 const mapSourcesToExecutableSchemas = (sources, mock, options) =>
   sources
     .map(({ schema, typeDefs, resolvers, mocks, namespace }) => {
-      if (typeof schema === 'string') {
-        console.warn(
-          namespace,
-          'Type definitions must be exported as "typeDefs".',
-          'Use of "schema" has been deprecated and will be removed in a future release',
-        );
-        typeDefs = typeDefs || schema;
-      }
+      typeDefs = checkTypeDefs({ schema, typeDefs, namespace });
       if (!typeDefs) {
         return null;
       }

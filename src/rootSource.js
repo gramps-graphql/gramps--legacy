@@ -1,20 +1,20 @@
 import pkg from '../package.json';
 
 const typeDefs = `
-type Query {
-  # Returns the current version of GrAMPS.
-  grampsVersion: String!
-}
+  type Query {
+    # Returns the current version of GrAMPS.
+    grampsVersion: String!
+  }
 
-type Mutation {
-  # Returns a charming message from GrAMPS.
-  grampsPing: String!
-}
+  type Mutation {
+    # Returns a charming message from GrAMPS.
+    grampsPing: String!
+  }
 
-schema {
-  query: Query
-  mutation: Mutation
-}
+  schema {
+    query: Query
+    mutation: Mutation
+  }
 `;
 
 const resolvers = {
