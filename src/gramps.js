@@ -31,10 +31,8 @@ const checkTypeDefs = ({ schema, typeDefs, namespace }) => {
       'Type definitions must be exported as "typeDefs".',
       'Use of "schema" has been deprecated and will be removed in a future release',
     );
-    return typeDefs || schema;
-  } else {
-    return typeDefs;
   }
+  return typeDefs || schema;
 };
 
 /**
