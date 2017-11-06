@@ -1,5 +1,5 @@
 import { GraphQLSchema } from 'graphql';
-import gramps from '../src/gramps';
+import gramps from '../src';
 
 describe('GrAMPS', () => {
   beforeEach(() => {
@@ -37,7 +37,7 @@ describe('GrAMPS', () => {
         },
       ];
 
-      const grampsConfig = gramps({ dataSources })();
+      const grampsConfig = gramps({ dataSources, enableMockData: false })();
 
       expect(grampsConfig.context).toEqual({
         Foo: {
