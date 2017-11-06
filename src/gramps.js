@@ -33,23 +33,31 @@ const getDefaultApolloOptions = options => ({
 */
 const mapSourcesToExecutableSchemas = (sources, mock, options) =>
   sources
-    .map(({ schema: typeDefs, resolvers, mocks, namespace }) => {
+    .map(({ schema, typeDefs, resolvers, mocks, namespace }) => {
+      if (typeof schema === 'string') {
+        console.warn(
+          namespace,
+          'Type definitions must be exported as "typeDefs".',
+          'Use of "schema" has been deprecated and will be removed in a future release',
+        );
+        typeDefs = typeDefs || schema;
+      }
       if (!typeDefs) {
         return null;
       }
-      const schema = makeExecutableSchema({
+      const executableSchema = makeExecutableSchema({
         typeDefs,
         resolvers: mapResolvers(namespace, resolvers),
         ...options.makeExecutableSchema,
       });
       if (mock) {
         addMockFunctionsToSchema({
-          schema,
+          schema: executableSchema,
           mocks,
           ...options.addMockFunctionsToSchema,
         });
       }
-      return schema;
+      return executableSchema;
     })
     .filter(schema => schema instanceof GraphQLSchema);
 

@@ -18,13 +18,34 @@ describe('GrAMPS', () => {
       );
     });
 
+    it('warns for use of schema', () => {
+      console.warn = jest.genMockFn();
+      const dataSources = [
+        {
+          namespace: 'Baz',
+          schema: 'type User { name: String } type Query { me: User }',
+          model: req => ({ baz: 'test' }),
+          stitching: {
+            linkTypeDefs: 'extend type User { age: Int }',
+            resolvers: mergeInfo => ({
+              User: {
+                age: () => 40,
+              },
+            }),
+          },
+        },
+      ];
+      gramps({ dataSources });
+      return expect(console.warn).toBeCalled();
+    });
+
     it('properly combines contexts', () => {
       const dataSources = [
         { namespace: 'Foo', model: { foo: 'test' } },
         { namespace: 'Bar', model: { bar: 'test' } },
         {
           namespace: 'Baz',
-          schema: 'type User { name: String } type Query { me: User }',
+          typeDefs: 'type User { name: String } type Query { me: User }',
           model: req => ({ baz: 'test' }),
           stitching: {
             linkTypeDefs: 'extend type User { age: Int }',
