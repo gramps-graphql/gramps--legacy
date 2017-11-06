@@ -1,6 +1,21 @@
 import pkg from '../package.json';
 
-import schema from './rootSchema.graphql';
+const typeDefs = `
+type Query {
+  # Returns the current version of GrAMPS.
+  grampsVersion: String!
+}
+
+type Mutation {
+  # Returns a charming message from GrAMPS.
+  grampsPing: String!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+`;
 
 const resolvers = {
   Query: {
@@ -11,4 +26,4 @@ const resolvers = {
   },
 };
 
-export default { schema, resolvers };
+export default { typeDefs, resolvers };
