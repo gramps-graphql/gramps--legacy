@@ -1,7 +1,7 @@
 export default (namespace, resolvers) => {
   if (resolvers instanceof Object) {
-    for (const type of Object.keys(resolvers)) {
-      for (const field of Object.keys(resolvers[type])) {
+    Object.keys(resolvers).forEach(type => {
+      Object.keys(resolvers[type]).forEach(field => {
         const fn = resolvers[type][field];
         if (typeof fn !== 'function') {
           throw new Error(
@@ -10,8 +10,8 @@ export default (namespace, resolvers) => {
         }
         resolvers[type][field] = (root, args, context, info) =>
           fn(root, args, context[namespace], info);
-      }
-    }
+      });
+    });
     return resolvers;
   }
 };
