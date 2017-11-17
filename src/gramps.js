@@ -8,7 +8,7 @@ import {
   loadDevDataSources,
   overrideLocalSources,
 } from './lib/externalDataSources';
-import mapResolvers from './lib/mapResolvers';
+import mapSchema from './lib/mapSchema';
 
 import rootSource from './rootSource';
 import combineStitchingResolvers from './lib/combineStitchingResolvers';
@@ -31,15 +31,26 @@ const getDefaultApolloOptions = options => ({
 * @param  {Object}  options  additional apollo options
 * @return {Array}            list of executable schemas
 */
-const mapSourcesToExecutableSchemas = (sources, mock, options) =>
+const mapSourcesToExecutableSchemas = (
+  sources,
+  mock,
+  options,
+  prefixTypesWithNamespace,
+  namespaceQuery,
+) =>
   sources
     .map(({ schema: typeDefs, resolvers, mocks, namespace }) => {
-      if (!typeDefs) {
+      if (!typeDefs || !namespace) {
         return null;
       }
       const schema = makeExecutableSchema({
-        typeDefs,
-        resolvers: mapResolvers(namespace, resolvers),
+        ...mapSchema({
+          typeDefs,
+          resolvers,
+          namespace,
+          prefixTypesWithNamespace,
+          namespaceQuery,
+        }),
         ...options.makeExecutableSchema,
       });
       if (mock) {
@@ -82,6 +93,8 @@ const mapSourcesToExecutableSchemas = (sources, mock, options) =>
  * @param  {Function?} config.extraContext    function to add additional context
  * @param  {Object?}   config.logger          requires `info` & `error` methods
  * @param  {Object?}   config.apollo          options for Apollo functions
+ * @param  {Boolean?}  config.prefixTypesWithNamespace prefix all types with namespace
+ * @param  {Boolean?}  config.namespaceQuery  each data source should have its own query namespace
  * @return {Function}                         req => options for `graphqlExpress()`
  */
 export default function gramps(
@@ -91,6 +104,8 @@ export default function gramps(
     extraContext = req => ({}), // eslint-disable-line no-unused-vars
     logger = console,
     apollo = {},
+    prefixTypesWithNamespace = false,
+    namespaceQuery = false,
   } = {},
 ) {
   // Make sure all Apollo options are set properly to avoid undefined errors.
@@ -108,6 +123,8 @@ export default function gramps(
     allSources,
     enableMockData,
     apolloOptions,
+    prefixTypesWithNamespace,
+    namespaceQuery,
   );
 
   const sourcesWithStitching = sources.filter(source => source.stitching);
