@@ -37,27 +37,24 @@ const BASE_TYPES = ['Query', 'Mutation', 'String', 'Int', 'Float', 'Boolean'];
 
 function mapTypeDefs({
   namespace,
-  typeDefs,
-  prefixTypesWithNamespace = false,
   namespaceQuery = false,
+  shouldPrefixType,
+  typeDefs,
 }) {
   const typeDefsArray = getTypeDefsArray(typeDefs);
   const resultTypeDefs = typeDefsArray.map(typeDef =>
     typeDef
       // replace definitions
       .replace(
-        /(type|interface|enum|union|implements|input) (\w+)/g,
+        /(type|interface|enum|union|implements|input)\s(\w+)/g,
         (match, keyword, type) =>
-          (!BASE_TYPES.includes(type) && prefixTypesWithNamespace) ||
-          (type === 'Query' && namespaceQuery)
-            ? `${keyword} ${namespace}_${type}`
-            : match,
+          shouldPrefixType(type) ? `${keyword} ${namespace}_${type}` : match,
       )
       // replace return types
       .replace(
         /(\w+\s*:\s*\[?)(\w+)(\!?\]?)/g,
         (match, prefix, type, suffix) =>
-          !BASE_TYPES.includes(type) && prefixTypesWithNamespace
+          shouldPrefixType(type)
             ? `${prefix}${namespace}_${type}${suffix}`
             : match,
       ),
@@ -70,17 +67,14 @@ function mapTypeDefs({
 
 function mapResolvers({
   namespace,
-  resolvers,
-  prefixTypesWithNamespace = false,
   namespaceQuery = false,
+  shouldPrefixType,
+  resolvers,
 }) {
   const resultResolvers = Object.keys(resolvers).reduce(
     (typeResolvers, type) => ({
       ...typeResolvers,
-      [(!BASE_TYPES.includes(type) && prefixTypesWithNamespace) ||
-      (type === 'Query' && namespaceQuery)
-        ? `${namespace}_${type}`
-        : type]: Object.keys(
+      [shouldPrefixType(type) ? `${namespace}_${type}` : type]: Object.keys(
         resolvers[type],
       ).reduce((fieldResolvers, field) => {
         const resolver = resolvers[type][field];
@@ -121,8 +115,18 @@ function mapResolvers({
  * If true, rename Query to {namespace}_Query
  */
 export default function mapSchema(options) {
+  const { prefixTypesWithNamespace = false, namespaceQuery = false } = options;
+  const shouldPrefixType = type =>
+    (prefixTypesWithNamespace && !BASE_TYPES.includes(type)) ||
+    (type === 'Query' && namespaceQuery);
   return {
-    typeDefs: mapTypeDefs(options),
-    resolvers: mapResolvers(options),
+    typeDefs: mapTypeDefs({
+      ...options,
+      shouldPrefixType,
+    }),
+    resolvers: mapResolvers({
+      ...options,
+      shouldPrefixType,
+    }),
   };
 }
