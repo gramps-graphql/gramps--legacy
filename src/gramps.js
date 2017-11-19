@@ -40,7 +40,7 @@ const mapSourcesToExecutableSchemas = (
 ) =>
   sources
     .map(({ schema: typeDefs, resolvers, mocks, namespace }) => {
-      if (!typeDefs || !namespace) {
+      if (!typeDefs) {
         return null;
       }
       const schema = makeExecutableSchema({

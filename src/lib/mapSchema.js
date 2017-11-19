@@ -71,27 +71,21 @@ function mapResolvers({
   shouldPrefixType,
   resolvers,
 }) {
-  const resultResolvers = Object.keys(resolvers).reduce(
-    (typeResolvers, type) => ({
-      ...typeResolvers,
-      [shouldPrefixType(type) ? `${namespace}_${type}` : type]: Object.keys(
-        resolvers[type],
-      ).reduce((fieldResolvers, field) => {
-        const resolver = resolvers[type][field];
-        if (typeof resolver !== 'function') {
-          throw new Error(
-            `Expected Function for ${type}.${field} resolver but received ${typeof fn}`,
-          );
-        }
-        return {
-          ...fieldResolvers,
-          [field]: (parent, args, context, info) =>
-            resolver(parent, args, context[namespace], info),
-        };
-      }, {}),
-    }),
-    {},
-  );
+  const resultResolvers = {};
+  Object.keys(resolvers || {}).forEach(key => {
+    const type = shouldPrefixType(key) ? `${namespace}_${key}` : key;
+    resultResolvers[type] = {};
+    Object.keys(resolvers[key] || {}).forEach(field => {
+      const resolver = resolvers[type][field];
+      if (typeof resolver !== 'function') {
+        throw new Error(
+          `Expected Function for ${type}.${field} resolver but received ${typeof fn}`,
+        );
+      }
+      resultResolvers[type][field] = (parent, args, context, info) =>
+        resolver(parent, args, context[namespace], info);
+    });
+  });
   if (namespaceQuery) {
     resultResolvers.Query = {
       [namespace]: root => root || {},
