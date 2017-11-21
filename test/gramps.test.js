@@ -35,18 +35,20 @@ describe('GrAMPS', () => {
           },
         },
       ];
+
       gramps({ dataSources });
+
       return expect(console.warn).toBeCalled();
     });
 
     it('properly combines contexts', () => {
       const dataSources = [
-        { namespace: 'Foo', model: { foo: 'test' } },
-        { namespace: 'Bar', model: { bar: 'test' } },
+        { namespace: 'Foo', context: { foo: 'test' } },
+        { namespace: 'Bar', context: { bar: 'test' } },
         {
           namespace: 'Baz',
           typeDefs: 'type User { name: String } type Query { me: User }',
-          model: req => ({ baz: 'test' }),
+          context: req => ({ baz: 'test' }),
           stitching: {
             linkTypeDefs: 'extend type User { age: Int }',
             resolvers: mergeInfo => ({
