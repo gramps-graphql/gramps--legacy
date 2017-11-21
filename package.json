@@ -19,7 +19,7 @@
   "scripts": {
     "prepush": "npm test",
     "prebuild": "del-cli ./dist",
-    "build": "babel src -d dist && cpy \"**/*.graphql\" \"../dist/\" --cwd=src --parents",
+    "build": "babel src -d dist",
     "lint": "eslint src/**/*.js",
     "test": "npm run lint --silent && npm run test:unit --silent",
     "test:unit": "cross-env NODE_ENV=test LOG4JS_LEVEL='OFF' jest --coverage",

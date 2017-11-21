@@ -36,31 +36,35 @@ const checkTypeDefs = ({ schema, typeDefs, namespace }) => {
 };
 
 /**
-* Maps data sources and returns array of executable schema
-* @param  {Array}   sources  data sources to combine
-* @param  {Boolean} mock     whether or not to mock resolvers
-* @param  {Object}  options  additional apollo options
-* @return {Array}            list of executable schemas
-*/
-const mapSourcesToExecutableSchemas = (sources, mock, options) =>
+ * Maps data sources and returns array of executable schema
+ * @param  {Array}   sources     data sources to combine
+ * @param  {Boolean} shouldMock  whether or not to mock resolvers
+ * @param  {Object}  options     additional apollo options
+ * @return {Array}               list of executable schemas
+ */
+const mapSourcesToExecutableSchemas = (sources, shouldMock, options) =>
   sources
     .map(({ schema, typeDefs, resolvers, mocks, namespace }) => {
-      typeDefs = checkTypeDefs({ schema, typeDefs, namespace });
-      if (!typeDefs) {
+      const sourceTypeDefs = checkTypeDefs({ schema, typeDefs, namespace });
+
+      if (!sourceTypeDefs) {
         return null;
       }
+
       const executableSchema = makeExecutableSchema({
-        typeDefs,
+        typeDefs: sourceTypeDefs,
         resolvers: mapResolvers(namespace, resolvers),
         ...options.makeExecutableSchema,
       });
-      if (mock) {
+
+      if (shouldMock) {
         addMockFunctionsToSchema({
           schema: executableSchema,
           mocks,
           ...options.addMockFunctionsToSchema,
         });
       }
+
       return executableSchema;
     })
     .filter(schema => schema instanceof GraphQLSchema);
@@ -134,12 +138,15 @@ export default function gramps(
   });
 
   const getContext = req =>
-    sources.reduce((models, source) => {
-      const model =
-        typeof source.model === 'function' ? source.model(req) : source.model;
+    sources.reduce((allContext, source) => {
+      const sourceContext =
+        typeof source.context === 'function'
+          ? source.context(req)
+          : source.context;
+
       return {
-        ...models,
-        [source.namespace]: model,
+        ...allContext,
+        [source.namespace]: sourceContext,
       };
     }, extraContext(req));
 
