@@ -21,14 +21,14 @@
 <body>
   <div class="app-chrome">
     <header class="app-chrome__header">
-      <a href="{{ site.github.url }}/" class="logo" rel="home">
-        <img src="{{ site.github.url }}/assets/img/GrAMPS-logo.svg" alt="GrAMPS GraphQL" class="logo__image">
+      <a href='{{ "/" | relative_url }}' class="logo" rel="home">
+        <img src='{{ "/assets/img/GrAMPS-logo.svg" | relative_url }}' alt="GrAMPS GraphQL" class="logo__image">
         <span class="logo__text">{{ site.logo_tag }}</span>
       </a>
     </header>
     <main class="content app-chrome__main-content">
       <nav class="content__nav">
-        <a class="content__nav-link u-icon u-icon--before u-icon--question" href="{{ site.github.url }}/support">
+        <a class="content__nav-link u-icon u-icon--before u-icon--question" href='{{ "/support" | relative_url }}'>
           Get Support
         </a>
         <a class="content__nav-link u-icon u-icon--before u-icon--pencil" href="{{ site.github_repo }}/edit/{{ site.github_branch | default: 'gh-pages' }}/{{ page.path }}">
@@ -41,7 +41,7 @@
     {% include partials/sidebar.html %}
   </div>
   {% include partials/lightbox.html %}
-  <script src="{{ site.github.url }}/assets/js/main.min.js"></script> {% if jekyll.environment != 'production' %}
+  <script src='{{ "/assets/js/main.min.js" | relative_url }}'></script> {% if jekyll.environment != 'production' %}
   <script>
     document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
       ':35729/livereload.js?snipver=1"></' + 'script>')
