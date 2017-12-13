@@ -1,17 +1,28 @@
+import merge from 'lodash.merge';
+
 export default (namespace, resolvers) => {
   if (resolvers instanceof Object) {
-    for (const type of Object.keys(resolvers)) {
-      for (const field of Object.keys(resolvers[type])) {
+    return Object.keys(resolvers).reduce((newResolvers, type) => {
+      const fieldResolvers = Object.keys(resolvers[type]).map(field => {
         const fn = resolvers[type][field];
+
         if (typeof fn !== 'function') {
           throw new Error(
             `Expected Function for ${type}.${field} resolver but received ${typeof fn}`,
           );
         }
-        resolvers[type][field] = (root, args, context, info) =>
+
+        const resolver = (root, args, context, info) =>
           fn(root, args, context[namespace], info);
-      }
-    }
-    return resolvers;
+
+        return {
+          [type]: {
+            [field]: resolver,
+          },
+        };
+      });
+
+      return merge(newResolvers, ...fieldResolvers);
+    }, {});
   }
 };
