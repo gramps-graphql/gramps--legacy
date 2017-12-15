@@ -1,4 +1,5 @@
 import { GraphQLSchema } from 'graphql';
+import * as GraphQLTools from 'graphql-tools';
 import gramps from '../src';
 
 describe('GrAMPS', () => {
@@ -82,6 +83,28 @@ describe('GrAMPS', () => {
 
       expect(grampsConfig.context).toEqual({
         extra: 'test',
+      });
+    });
+
+    it('adds mock resolvers when the flag is set', () => {
+      jest.clearAllMocks();
+      const spy = jest.spyOn(GraphQLTools, 'addMockFunctionsToSchema');
+
+      gramps({
+        dataSources: [
+          {
+            namespace: 'Foo',
+            typeDefs: 'type Query { test: Test } type Test { foo: String }',
+            context: { foo: 'test' },
+            mocks: { Test: () => ({ foo: 'bar' }) },
+          },
+        ],
+        enableMockData: true,
+      })();
+
+      // The first call is the GrAMPS root data source, which has no mocks.
+      expect(spy.mock.calls[1][0].mocks).toEqual({
+        Test: expect.any(Function),
       });
     });
   });
