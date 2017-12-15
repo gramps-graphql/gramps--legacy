@@ -37,6 +37,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "mfix22",
+      "name": "Michael Fix",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/8397708?v=4",
+      "profile": "https://mfix22.github.io",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
