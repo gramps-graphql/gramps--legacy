@@ -103,7 +103,7 @@ const mapSourcesToExecutableSchemas = (sources, shouldMock, options) =>
 export default function gramps(
   {
     dataSources = [],
-    enableMockData = process.env.GRAMPS_MODE !== 'live',
+    enableMockData = process.env.GRAMPS_MODE === 'mock',
     extraContext = req => ({}), // eslint-disable-line no-unused-vars
     logger = console,
     apollo = {},
