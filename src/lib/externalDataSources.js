@@ -5,7 +5,7 @@ import { EOL } from 'os';
 let isUsingExternalData = false;
 
 const getExternalSourcePaths = () => {
-  const sources = process.env.GQL_DATA_SOURCES || '';
+  const sources = process.env.GRAMPS_DATA_SOURCES || '';
 
   return sources.split(',').map(s => s.trim());
 };

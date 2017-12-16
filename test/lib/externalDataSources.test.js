@@ -12,7 +12,7 @@ jest.mock('../../src/lib/defaultLogger', () => ({
 
 describe('lib/externalDataSources', () => {
   afterEach(() => {
-    delete process.env.GQL_DATA_SOURCES;
+    delete process.env.GRAMPS_DATA_SOURCES;
   });
 
   describe('loadDevDataSources()', () => {
@@ -24,7 +24,7 @@ describe('lib/externalDataSources', () => {
     });
 
     it('returns an external source if one is supplied', () => {
-      process.env.GQL_DATA_SOURCES = './test/fixtures/externalDataSourceOne';
+      process.env.GRAMPS_DATA_SOURCES = './test/fixtures/externalDataSourceOne';
       const sources = loadDevDataSources({ logger: defaultLogger });
 
       expect(sources).toBeDefined();
@@ -33,7 +33,7 @@ describe('lib/externalDataSources', () => {
     });
 
     it('returns two external sources if two are supplied', () => {
-      process.env.GQL_DATA_SOURCES =
+      process.env.GRAMPS_DATA_SOURCES =
         './test/fixtures/externalDataSourceOne, ./test/fixtures/externalDataSourceTwo';
       const sources = loadDevDataSources({ logger: defaultLogger });
 
