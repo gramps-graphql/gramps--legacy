@@ -1,8 +1,13 @@
-const mapObj = fn => obj =>
-  Object.keys(obj).reduce(
-    (acc, key) => ({ ...acc, [key]: fn(obj[key], key, obj) }),
-    {},
-  );
+const mapObj = fn => obj => {
+  if (obj.constructor.name === 'Object') {
+    return Object.keys(obj).reduce(
+      (acc, key) => ({ ...acc, [key]: fn(obj[key], key, obj) }),
+      {},
+    );
+  } else {
+    return obj;
+  }
+};
 
 const checkFn = (fn, fieldName) => {
   if (typeof fn !== 'function') {
