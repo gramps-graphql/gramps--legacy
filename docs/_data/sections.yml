@@ -7,6 +7,14 @@ overview:
   title: Overview
   icon: rocket
 
+core:
+  title: GrAMPS Core
+  icon: star
+
+cli:
+  title: Command Line Tools
+  icon: terminal
+
 data-source:
   title: Data Sources
   icon: database
