@@ -1,3 +1,4 @@
+import { GraphQLScalarType } from 'graphql';
 import mapResolvers from '../../src/lib/mapResolvers';
 
 describe('lib/mapResolvers', () => {
@@ -25,5 +26,15 @@ describe('lib/mapResolvers', () => {
         },
       });
     }).toThrow();
+  });
+
+  it('passes scalar types through untouched', () => {
+    const resolvers = {
+      json: new GraphQLScalarType({
+        name: 'json',
+        serialize: () => 'this is fake json',
+      }),
+    };
+    expect(mapResolvers('namespace', resolvers).json).toEqual(resolvers.json);
   });
 });
