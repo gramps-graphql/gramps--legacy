@@ -37,7 +37,7 @@
     "apollo-server-express": "^1.1.2",
     "babel-cli": "^6.24.1",
     "babel-eslint": "^8.0.1",
-    "babel-jest": "^21.2.0",
+    "babel-jest": "^22.0.0",
     "babel-plugin-inline-import": "^2.0.6",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.24.1",
