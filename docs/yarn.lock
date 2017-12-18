@@ -1856,10 +1856,6 @@ hawk@~6.0.2:
     hoek "4.x.x"
     sntp "2.x.x"
 
-help@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/help/-/help-3.0.2.tgz#96e190d4a0a453b89c2cb4b05ab38e3a8f9fdadd"
-
 hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
