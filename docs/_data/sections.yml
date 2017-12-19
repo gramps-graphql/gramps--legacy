@@ -10,6 +10,7 @@ overview:
 core:
   title: GrAMPS Core
   icon: star
+  hidden: true
 
 cli:
   title: Command Line Tools
