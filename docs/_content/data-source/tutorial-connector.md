@@ -1,6 +1,7 @@
 ---
 title: "Tutorial: Connector"
 weight: 20
+hidden: true
 ---
 
 Now that we’ve [set up the data source]({{ site.github.url }}/data-source/tutorial-setup), we can start building the data source itself. In this section, we’ll tell the data source where data should come from.

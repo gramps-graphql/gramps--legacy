@@ -1,6 +1,7 @@
 ---
 title: "Tutorial: Create a Data Source"
 weight: 10
+hidden: true
 ---
 
 In this tutorial, we’re going to create a data source for [the IMDB API](http://www.theimdbapi.org/), which allows us to look up information about movies.
