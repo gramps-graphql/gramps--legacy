@@ -1,6 +1,7 @@
 ---
 title: How to Test GrAMPS Data Sources
 weight: 450
+hidden: true
 ---
 
 TKTK

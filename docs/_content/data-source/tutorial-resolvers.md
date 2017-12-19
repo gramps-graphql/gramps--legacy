@@ -1,6 +1,7 @@
 ---
 title: "Tutorial: Resolvers"
 weight: 50
+hidden: true
 ---
 
 Now we know how to get data thanks to our [connector]({{ site.github.url }}/data-source/tutorial-connector) and [model]({{ site.github.url }}/data-source/tutorial-model), and have told GraphQL clients what kind of data to expect with our [schema]({{ site.github.url }}/data-source/tutorial-schema). In this section, we’ll add resolver functions to map the API response to our schema so we can actually return data.

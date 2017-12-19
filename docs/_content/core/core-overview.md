@@ -1,5 +1,5 @@
 ---
-title: GrAMPS Core
+title: Overview
 weight: 1
 ---
 
