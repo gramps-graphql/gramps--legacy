@@ -1,6 +1,7 @@
 ---
 title: How to Publish GrAMPS Data Sources
 weight: 500
+hidden: true
 ---
 
 TKTK

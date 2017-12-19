@@ -1,6 +1,7 @@
 ---
 title: "Tutorial: Development Modes"
 weight: 60
+hidden: true
 ---
 
 At this point, we have our [connector]({{ site.github.url }}/data-source/tutorial-connector), [model]({{ site.github.url }}/data-source/tutorial-model), [schema]({{ site.github.url }}/data-source/tutorial-schema), and [resolvers]({{ site.github.url }}/data-source/tutorial-resolvers) built and ready to go. All that’s left to do is fire up our data source in mock and live mode to make sure it’s working.

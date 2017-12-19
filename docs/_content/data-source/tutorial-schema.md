@@ -1,6 +1,7 @@
 ---
 title: "Tutorial: Schema"
 weight: 40
+hidden: true
 ---
 
 At this point, we’ve [set up a connector]({{ site.github.url }}/data-source/tutorial-connector) to tell our data source where data comes from, and [defined data access methods in a model]({{ site.github.url }}/data-source/tutorial-model) to make requests for specific types of data. In this section, we’ll create a GraphQL schema to describe our data.
