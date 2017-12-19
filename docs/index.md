@@ -27,10 +27,10 @@ Check out the links below to get started.
 %}
 
 {% include links-2-col.html
-    l1_text="See the source code on GitHub"
+    l1_text="See the source on GitHub"
     l1_icon="github"
     l1_href="https://github.com/gramps-graphql/gramps-express"
-    l2_text="Join the Apollo Slack"
+    l2_text="Discuss GrAMPS on Slack"
     l2_icon="slack"
-    l2_href="http://www.apollodata.com/#slack"
+    l2_href="https://graphcool.slack.com/messages/C8GG5TL0M"
 %}
