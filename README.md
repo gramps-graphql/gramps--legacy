@@ -1,4 +1,4 @@
-<a href="https://ibm.biz/gramps-graphql"><img src="https://gramps-graphql.github.io/gramps-express/assets/img/gramps-banner.png" alt="GrAMPS · An easier way to manage the data sources powering your GraphQL server" width="450"></a>
+<a href="https://gramps.js.org/"><img src="https://gramps.js.org/assets/img/gramps-banner.png" alt="GrAMPS · An easier way to manage the data sources powering your GraphQL server" width="450"></a>
 
 # GrAMPS — Composable, Shareable Data Sources for GraphQL
 [![license](https://img.shields.io/npm/l/@gramps/gramps.svg)](https://github.com/gramps-graphql/gramps/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/@gramps/gramps.svg?style=flat)](https://www.npmjs.com/package/@gramps/gramps) [![Build Status](https://travis-ci.org/gramps-graphql/gramps.svg?branch=master)](https://travis-ci.org/gramps-graphql/gramps) [![Maintainability](https://api.codeclimate.com/v1/badges/ac264833fac1fbd1afe0/maintainability)](https://codeclimate.com/github/gramps-graphql/gramps/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/ac264833fac1fbd1afe0/test_coverage)](https://codeclimate.com/github/gramps-graphql/gramps/test_coverage) [![Greenkeeper badge](https://badges.greenkeeper.io/gramps-graphql/gramps.svg)](https://greenkeeper.io/) [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
@@ -9,33 +9,42 @@
 
 ## Developer Quickstart
 
-[See the 5-minute quickstart in our documentation.](https://gramps-graphql.github.io/gramps-express/overview/quickstart/)
+To get a GrAMPS+[Apollo](https://github.com/apollographql/apollo-server/tree/master/packages/apollo-server-express) gateway up and running, start by installing the required packages:
+
+```bash
+yarn add @gramps/gramps express apollo-server-express body-parser graphql
+```
+
+Next, create a file called `index.js` and put the following inside:
+
+```js
+const Express = require('express');
+const bodyParser = require('body-parser');
+const gramps = require('@gramps/gramps').default;
+const { GraphQLSchema } = require('graphql');
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+
+const app = Express();
+const GraphQLOptions = gramps();
+
+app.use(bodyParser.json());
+app.use('/graphql', graphqlExpress(GraphQLOptions));
+app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+
+app.listen(8080, () => console.log(`=> running at http://localhost:8080/`));
+```
+
+Start the server with `node index.js`, then open http://localhost:8080/graphiql to see the GraphiQL user interface.
+
+For a more in-depth starter, [see the 5-minute quickstart](https://gramps.js.org/overview/quickstart/) in our documentation.
 
 ## Why Does GrAMPS Exist?
 
 GrAMPS is an attempt to create a standard for organizing GraphQL data source repositories, which allows for multiple data sources to be composed together in a plugin-like architecture.
 
-The architecture of GrAMPS data sources was inspired by @helfer, who [suggested models and connectors as abstractions](https://dev-blog.apollodata.com/how-to-build-graphql-servers-87587591ded5) when designing GraphQL servers. GrAMPS expands on the original concept and provides a standard that makes separate codebases interoperable.
+The ability to combine independently managed data sources into a single GraphQL server is a core requirement for IBM Cloud’s microservice architecture. We have dozens of teams who expose data, so a single codebase with all GraphQL data sources inside was not an option; we needed a way to give each team control of their data while still maintaining the ability to unify and expose our data layer under a single GraphQL microservice. 
 
-The ability to combine independently managed data sources into a single GraphQL server is a core requirement for IBM Cloud’s microservice architecture. We have dozens of teams who expose data, so a single codebase with all GraphQL data sources inside was not an option; we needed a way to give each team control of their data while still maintaining the ability to simplify our data layer. 
-
-GrAMPS solves this problem by allowing each data source to be an independent repository/package that can be composed together into a single GraphQL server.
-
-## What GrAMPS Can Do
-
- -  Combine distinct schemas into a single GraphQL schema
- -  Allow local development with optional local overrides of data sources
- -  Improve error reporting with optional error handling
-
-## Roadmap
-
-- [ ] Write a [data source](https://github.com/gramps-graphql/data-source-base) tutorial (#21, WIP at #22)
-- [ ] Write a developer quickstart (#23)
-- [ ] Add API docs (#24)
-- [ ] Write docs about how error handling works (#25)
-- [ ] Define a pattern for direct database access (#28)
-- [x] Add [all-contributors](https://github.com/kentcdodds/all-contributors) (#29)
-- [ ] Add integration test examples/docs with [Cypress](https://www.cypress.io/) (#30)
+GrAMPS solves this problem by splitting each data source into independent packages that are composed together into a single GraphQL server.
 
 ## Contributors
 
@@ -48,9 +57,3 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
-
-## Credits
-
-GrAMPS was born at [IBM Cloud](https://www.ibm.com/cloud-computing/) to solve the problem of maintaining a single GraphQL endpoint in a µ-service architecture where data sources are owned by dozens of teams.
-
-We’re releasing it under the [MIT license](https://github.com/gramps-graphql/gramps/blob/master/LICENSE) because we ❤️ the developer community.
