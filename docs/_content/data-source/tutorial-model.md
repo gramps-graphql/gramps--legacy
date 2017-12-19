@@ -1,6 +1,7 @@
 ---
 title: "Tutorial: Model"
 weight: 30
+hidden: true
 ---
 
 Now that the [connector is ready]({{ site.github.url }}/data-source/tutorial-connector), we can write our data model class. This is pretty similar to any data access class you would write for an app, whether or not it uses GraphQL. If you’re familiar with the term <abbr title="Create Read Update Delete">CRUD</abbr>, this is the CRUD part of the data source.

@@ -383,4 +383,4 @@ This time, the response should be placeholder text that looks something like thi
 
 At this point, you've got a working GraphQL gateway running a GrAMPS data source!
 
-From here, you can learn [how to build your own data source]({{ site.github.url }}/data-source/tutorial-setup), dive into the [CLI docs]({{ site.github.url }}/cli/overview), or check out the [GrAMPS core docs]({{ site.github.url }}/core/overview).
+From here, you can learn [how to build your own data source]({{ site.github.url }}/data-source/tutorial-setup), dive into the [CLI docs]({{ site.github.url }}/cli/cli-overview), or check out the [GrAMPS core docs]({{ site.github.url }}/core/core-overview).

@@ -1,5 +1,6 @@
 ---
 title: Error Handling
+hidden: true
 ---
 
 GrAMPS comes with optional error handling.

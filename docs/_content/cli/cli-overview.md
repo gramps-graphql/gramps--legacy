@@ -1,5 +1,5 @@
 ---
-title: GrAMPS CLI Overview
+title: Overview
 weight: 1
 ---
 
@@ -73,4 +73,4 @@ gramps dev --gateway ./server.js --mock
 ## What’s Next?
 {:.no_toc}
 
-For more information, see the [full CLI API docs]({{ site.github.url }}/cli/api).
+For more information, see the [full CLI API docs]({{ site.github.url }}/cli/cli-api).

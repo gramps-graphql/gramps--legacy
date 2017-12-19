@@ -15,15 +15,15 @@ Check out the links below to get started.
     b1_link="/overview/quickstart"
     b1_icon="rocket"
 
-    b2_heading="Data Sources:<br>Build Your First Data Source"
-    b2_button="Go to the Tutorial"
-    b2_link="/data-source/tutorial-dev"
+    b2_heading="Data Sources:<br>Simple, Portable GraphQL"
+    b2_button="Learn More"
+    b2_link="/data-source/data-source-overview"
     b2_icon="database"
 
-    b3_heading="API Docs:<br>See What’s Under the Hood"
-    b3_button="Go to the API Docs"
-    b3_link="/api/overview"
-    b3_icon="code"
+    b3_heading="CLI Docs:<br>Development Made Easy"
+    b3_button="Go to the CLI Docs"
+    b3_link="/cli/cli-overview"
+    b3_icon="terminal"
 %}
 
 {% include links-2-col.html
