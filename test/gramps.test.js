@@ -79,11 +79,12 @@ describe('GrAMPS', () => {
 
     it('properly adds extra context', () => {
       const grampsConfig = gramps({
-        extraContext: () => ({ extra: 'test' }),
+        dataSources: [{ namespace: 'FOO', context: { source: 'context' } }],
+        extraContext: () => ({ extra: 'context' }),
       })();
 
       expect(grampsConfig.context).toEqual({
-        extra: 'test',
+        FOO: { extra: 'context', source: 'context' },
       });
     });
 

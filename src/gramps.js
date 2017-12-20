@@ -100,15 +100,13 @@ const mapSourcesToExecutableSchemas = (sources, shouldMock, options) =>
  * @param  {Object?}   config.apollo          options for Apollo functions
  * @return {Function}                         req => options for `graphqlExpress()`
  */
-export default function gramps(
-  {
-    dataSources = [],
-    enableMockData = process.env.GRAMPS_MODE === 'mock',
-    extraContext = req => ({}), // eslint-disable-line no-unused-vars
-    logger = console,
-    apollo = {},
-  } = {},
-) {
+export default function gramps({
+  dataSources = [],
+  enableMockData = process.env.GRAMPS_MODE === 'mock',
+  extraContext = req => ({}), // eslint-disable-line no-unused-vars
+  logger = console,
+  apollo = {},
+  } = {}) {
   // Make sure all Apollo options are set properly to avoid undefined errors.
   const apolloOptions = getDefaultApolloOptions(apollo);
 
@@ -137,8 +135,9 @@ export default function gramps(
     resolvers,
   });
 
-  const getContext = req =>
-    sources.reduce((allContext, source) => {
+  const getContext = req => {
+    const extra = extraContext(req);
+    return sources.reduce((allContext, source) => {
       const sourceContext =
         typeof source.context === 'function'
           ? source.context(req)
@@ -146,9 +145,10 @@ export default function gramps(
 
       return {
         ...allContext,
-        [source.namespace]: sourceContext,
+        [source.namespace]: { ...extra, ...sourceContext },
       };
-    }, extraContext(req));
+    }, {});
+  };
 
   return req => ({
     schema,
