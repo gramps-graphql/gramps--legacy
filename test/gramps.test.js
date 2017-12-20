@@ -25,7 +25,8 @@ describe('GrAMPS', () => {
         {
           namespace: 'Baz',
           schema: 'type User { name: String } type Query { me: User }',
-          model: req => ({ baz: 'test' }),
+          context: req => ({ getUser: () => ({ name: 'Test user' }) }),
+          resolvers: { Query: { me: (_, __, context) => context.getUser() } },
           stitching: {
             linkTypeDefs: 'extend type User { age: Int }',
             resolvers: mergeInfo => ({
