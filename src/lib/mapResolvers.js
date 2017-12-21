@@ -1,7 +1,11 @@
+const omit = key => ['Subscription'].includes(key);
 const mapObj = fn => obj => {
   if (obj.constructor.name === 'Object') {
     return Object.keys(obj).reduce(
-      (acc, key) => ({ ...acc, [key]: fn(obj[key], key, obj) }),
+      (acc, key) => ({
+        ...acc,
+        [key]: omit(key) ? obj[key] : fn(obj[key], key, obj),
+      }),
       {},
     );
   } else {
