@@ -137,8 +137,9 @@ export default function gramps(
     resolvers,
   });
 
-  const getContext = req =>
-    sources.reduce((allContext, source) => {
+  const getContext = req => {
+    const extra = extraContext(req);
+    return sources.reduce((allContext, source) => {
       const sourceContext =
         typeof source.context === 'function'
           ? source.context(req)
@@ -146,9 +147,10 @@ export default function gramps(
 
       return {
         ...allContext,
-        [source.namespace]: sourceContext,
+        [source.namespace]: { ...extra, ...sourceContext },
       };
-    }, extraContext(req));
+    }, {});
+  };
 
   return req => ({
     schema,
