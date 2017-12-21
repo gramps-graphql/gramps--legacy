@@ -37,4 +37,12 @@ describe('lib/mapResolvers', () => {
     };
     expect(mapResolvers('namespace', resolvers).json).toEqual(resolvers.json);
   });
+  it('does not map Subscription resolvers', () => {
+    const resolvers = {
+      Subscription: {
+        subscribe: () => 'foobar',
+      },
+    };
+    expect(mapResolvers('namespace', resolvers)).toEqual(resolvers);
+  });
 });
