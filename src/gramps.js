@@ -109,9 +109,37 @@ export default function gramps(
     apollo = {},
   } = {},
 ) {
+  
+  const gramps = prepare(
+    {
+      dataSources,
+      enableMockData,
+      extraContext,
+      logger,
+      apollo,
+    }
+  )
+  
   // Make sure all Apollo options are set properly to avoid undefined errors.
-  const apolloOptions = getDefaultApolloOptions(apollo);
+  const apolloOptions = getDefaultApolloOptions(apollo); 
 
+  return req => ({
+    schema: gramps.schema,
+    context: gramps.getContext(req),
+    // formatError: formatError(logger),
+    ...apolloOptions.graphqlExpress,
+  });
+}
+
+export function prepare(
+  {
+    dataSources = [],
+    enableMockData = process.env.GRAMPS_MODE === 'mock',
+    extraContext = req => ({}), // eslint-disable-line no-unused-vars
+    logger = console,
+    apollo = {},
+  } = {}
+) {
   const devSources = loadDevDataSources({ logger });
   const sources = overrideLocalSources({
     sources: dataSources,
@@ -152,10 +180,14 @@ export default function gramps(
     }, {});
   };
 
-  return req => ({
+  const addContext = () => (req, res, next) => {
+    getContext(req)
+    next()
+  }
+
+  return {
     schema,
-    context: getContext(req),
-    // formatError: formatError(logger),
-    ...apolloOptions.graphqlExpress,
-  });
+    context: getContext,
+    addContext
+  }
 }
