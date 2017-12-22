@@ -180,7 +180,7 @@ export function prepare(
     }, {});
   };
 
-  const contextMiddleware = (req, res, next) => {
+  const addContext = () => (req, res, next) => {
     getContext(req)
     next()
   }
@@ -188,6 +188,6 @@ export function prepare(
   return {
     schema,
     context: getContext,
-    contextMiddleware
+    addContext
   }
 }
