@@ -130,7 +130,7 @@ export default function gramps(
   const linkTypeDefs = sourcesWithStitching.map(
     source => source.stitching.linkTypeDefs,
   );
-  const resolvers = combineStitchingResolvers(sourcesWithStitching);
+  const resolvers = combineStitchingResolvers(sources);
 
   const schema = mergeSchemas({
     schemas: [...schemas, ...linkTypeDefs],
