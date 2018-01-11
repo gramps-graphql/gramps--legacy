@@ -100,7 +100,7 @@ const mapSourcesToExecutableSchemas = (sources, shouldMock, options) =>
  * @param  {Object?}   config.apollo          options for Apollo functions
  * @return {Function}                         req => options for `graphqlExpress()`
  */
-export default function gramps({
+export function prepare({
   dataSources = [],
   enableMockData = process.env.GRAMPS_MODE === 'mock',
   extraContext = req => ({}), // eslint-disable-line no-unused-vars
@@ -150,10 +150,22 @@ export default function gramps({
     }, extra);
   };
 
-  return req => ({
+  return {
     schema,
-    context: getContext(req),
+    context: getContext,
+    addContext: (req, res, next) => {
+      req.gramps = getContext(req);
+      next();
+    },
     // formatError: formatError(logger),
     ...apolloOptions.graphqlExpress,
+  };
+}
+
+export default function gramps(...args) {
+  const options = prepare(...args);
+  return req => ({
+    ...options,
+    context: options.context(req),
   });
 }
