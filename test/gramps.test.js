@@ -85,6 +85,7 @@ describe('GrAMPS', () => {
 
       expect(grampsConfig.context).toEqual({
         FOO: { extra: 'context', source: 'context' },
+        extra: 'context',
       });
     });
 
