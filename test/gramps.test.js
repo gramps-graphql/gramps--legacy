@@ -1,10 +1,21 @@
 import { GraphQLSchema } from 'graphql';
 import * as GraphQLTools from 'graphql-tools';
-import gramps from '../src';
+import gramps, { prepare } from '../src';
 
 describe('GrAMPS', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  describe('prepare()', () => {
+    it('addContext() adds gramps property to request object', () => {
+      const { addContext } = prepare();
+      const next = jest.genMockFn();
+      const req = {};
+      addContext(req, {}, next);
+      expect(req).toEqual({ gramps: {} });
+      expect(next).toBeCalled();
+    });
   });
 
   describe('gramps()', () => {

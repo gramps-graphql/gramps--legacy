@@ -155,6 +155,10 @@ export function prepare(
   return {
     schema,
     context: getContext,
+    addContext: (req, res, next) => {
+      req.gramps = getContext(req);
+      next();
+    },
     // formatError: formatError(logger),
     ...apolloOptions.graphqlExpress,
   };
