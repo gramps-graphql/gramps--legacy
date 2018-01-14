@@ -21,6 +21,7 @@ import combineStitchingResolvers from './lib/combineStitchingResolvers';
 const getDefaultApolloOptions = options => ({
   makeExecutableSchema: {},
   addMockFunctionsToSchema: {},
+  apolloServer: { ...options.graphqlExpress },
   ...options,
 });
 
@@ -52,16 +53,16 @@ const mapSourcesToExecutableSchemas = (sources, shouldMock, options) =>
       }
 
       const executableSchema = makeExecutableSchema({
+        ...options.makeExecutableSchema,
         typeDefs: sourceTypeDefs,
         resolvers: mapResolvers(namespace, resolvers),
-        ...options.makeExecutableSchema,
       });
 
       if (shouldMock) {
         addMockFunctionsToSchema({
+          ...options.addMockFunctionsToSchema,
           schema: executableSchema,
           mocks,
-          ...options.addMockFunctionsToSchema,
         });
       }
 
@@ -158,7 +159,7 @@ export function prepare({
       next();
     },
     // formatError: formatError(logger),
-    ...apolloOptions.graphqlExpress,
+    ...apolloOptions.apolloServer,
   };
 }
 
