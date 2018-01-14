@@ -55,7 +55,7 @@
     "jest": "^22.0.1",
     "nodemon": "^1.11.0",
     "prettier": "^1.5.3",
-    "semantic-release": "^8.2.0",
+    "semantic-release": "^11.0.2",
     "supertest": "^3.0.0"
   },
   "jest": {
