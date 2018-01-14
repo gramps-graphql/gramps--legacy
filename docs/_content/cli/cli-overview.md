@@ -20,11 +20,7 @@ Thanks to the CLI, you can create and run your own data source in about 60 secon
 
 ```bash
 # Get a copy of the data source base without the git history
-npx degit gramps-graphql/data-source-base#feat/1.x-refactor data-source-test
-
-# Move into the directory and install the dependencies
-cd data-source-test
-yarn
+npx graphql-cli create -b gramps-graphql/data-source-base data-source-mydata && cd $_
 
 # Start a gateway and start developing!
 yarn dev
