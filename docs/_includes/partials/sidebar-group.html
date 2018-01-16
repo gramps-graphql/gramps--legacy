@@ -1,32 +1,74 @@
-{% comment %} The sections for the sidebar are managed through _data/sections.yml. We load them in the order they're declared
-(`site.data.sections`), then loop through each section and list any pages. To allow pages to be ordered without explicitly
-requiring it, we sort by weight. The lower the weight, the higher a page floats in the order (get it?). {% endcomment %}
-{% assign sections = site.data.sections %} {% assign collection = site.documents | sort: "weight" %} {% for section_data
-in sections %} {% comment %} When we loop, the section_data is an array with two items: - 0: the identifier for the section
-(e.g. "introduction") - 1: the section data (e.g. the title) {% endcomment %} {% assign section_id = section_data[0] %} {%
-assign section = section_data[1] %} {% comment %} Sections can be hidden by setting `hidden: true`. Helpful for appendix-style
-sections that would be really long and/or confusing. {% endcomment %} {% if section.hidden != true %}
+{% comment %}
+  The sections for the sidebar are managed through _data/sections.yml. We load
+  them in the order they're declared (`site.data.sections`), then loop through
+  each section and list any pages. To allow pages to be ordered without
+  explicitly requiring it, we sort by weight. The lower the weight, the higher a
+  page floats in the order (get it?).
+{% endcomment %}
+{% assign sections = site.data.sections %}
+{% assign collection = site.documents | sort: "weight" %}
+
+{% for section_data in sections %}
+  {% comment %}
+    When we loop, the section_data is an array with two items:
+    - 0: the identifier for the section (e.g. "introduction")
+    - 1: the section data (e.g. the title)
+  {% endcomment %}
+  {% assign section_id = section_data[0] %}
+  {% assign section = section_data[1] %}
+  
+  {% comment %}
+    Sections can be hidden by setting `hidden: true`. Helpful for appendix-style
+    sections that would be really long and/or confusing.
+  {% endcomment %}
+  {% if section.hidden != true %}
 <div class="sidebar__group links js__collapsible">
   <h3 class="links__heading u-icon u-icon--before u-icon--{{ section.icon }}">
     {{ section.title }}
   </h3>
   <ul class="links__list">
 
-    {% comment %} Set up a loop through every page on the site. It’s not particularly efficient, but since we’re using a static
-    site generator, we don’t have an option. On the bright side, this only affects the build, which users never experience.
-    {% endcomment %} {% for currentPage in collection %} {% if currentPage.section %} {% comment %} By default, use the section
-    set in the page’s front matter. {% endcomment %} {% assign parent_section = currentPage.section %} {% else %} {% comment
-    %} To allow pages to be sorted by folder structure rather than requiring front matter, we use the URL structure as a
-    fallback. Example: /super/cool/page | └── the page name └─────── the immediate parent — used as the “section” {% endcomment
-    %} {% assign parent_section_arr = currentPage.url | split: "/" | reverse | slice: 1 %} {% assign parent_section = parent_section_arr.first
-    %} {% endif %} {% comment %} If the section matches, add the current page in the sidebar. {% endcomment %} {% if section_id
-    == parent_section %} {% if currentPage.hidden != true %}
+    {% comment %}
+      Set up a loop through every page on the site. It’s not particularly
+      efficient, but since we’re using a static site generator, we don’t have an
+      option. On the bright side, this only affects the build, which users never
+      experience.
+    {% endcomment %}
+    {% for currentPage in collection %}
+      {% if currentPage.section %}
+        {% comment %}
+          By default, use the section set in the page’s front matter.
+        {% endcomment %}
+        {% assign parent_section = currentPage.section %}
+      {% else %}
+        {% comment %}
+          To allow pages to be sorted by folder structure rather than requiring
+          front matter, we use the URL structure as a fallback.
+          
+          Example:
+            /super/cool/page
+            | └── the page name
+            └─────── the immediate parent — used as the “section”
+
+        {% endcomment %}
+        {% assign parent_section_arr = currentPage.url | split: "/" | reverse | slice: 1 %}
+        {% assign parent_section = parent_section_arr.first %}
+      {% endif %}
+
+      {% comment %}
+        If the section matches, add the current page in the sidebar.
+      {% endcomment %}
+      {% if section_id == parent_section %}
+        {% if currentPage.hidden != true %}
     <li class="links__list-item">
       <a href="{{ site.github.url}}{{ currentPage.url }}" class="links__link {% if page.url == currentPage.url %}links__link--selected{% endif %}">
         {{ currentPage.title }}
       </a>
     </li>
-    {% endif %} {% endif %} {% endfor %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
   </ul>
 </div>
-{% endif %} {% endfor %}
+  {% endif %}
+{% endfor %}

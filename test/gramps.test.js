@@ -16,6 +16,47 @@ describe('GrAMPS', () => {
       expect(req).toEqual({ gramps: {} });
       expect(next).toBeCalled();
     });
+
+    test('passes through apolloServer options', () => {
+      const gramps = prepare({
+        apollo: {
+          apolloServer: {
+            debug: true,
+          },
+        },
+      });
+
+      expect(gramps.debug).toBe(true);
+    });
+
+    test('passes through apolloServer options when passed in old graphqlExpress arg', () => {
+      const gramps = prepare({
+        apollo: {
+          graphqlExpress: {
+            debug: true,
+          },
+        },
+      });
+
+      expect(gramps.debug).toBe(true);
+    });
+
+    test('overrides `typeDefs` and `resolvers` in Apollo options', () => {
+      const spy = jest.spyOn(GraphQLTools, 'makeExecutableSchema');
+      const gramps = prepare({
+        apollo: {
+          typeDefs: `type Query { nope: String }`,
+          resolvers: { nope: () => 'nope' },
+        },
+      });
+
+      expect(spy).not.toBeCalledWith(
+        expect.objectContaining({
+          typeDefs: `type Query { nope: String }`,
+          resolvers: { nope: () => 'nope' },
+        }),
+      );
+    });
   });
 
   describe('gramps()', () => {
