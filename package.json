@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
-    "graphql-tools": "^2.14.1",
+    "graphql-tools": "^2.20.2",
     "lodash.merge": "^4.6.0"
   },
   "peerDependencies": {
