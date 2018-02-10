@@ -1,5 +1,7 @@
 class GraphQLConnector {}
 
-export default class ExternalOneConnector extends GraphQLConnector {
-  apiBaseUri = 'https://api.example.com';
-}
+module.exports = class ExternalOneConnector extends GraphQLConnector {
+  get apiBaseUri() {
+    return 'https://api.example.com';
+  }
+};

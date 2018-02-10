@@ -1,6 +1,6 @@
 export default interface IDataSource {
   stitching?: {
-    linkTypeDefs: any;
+    linkTypeDefs?: any;
     resolvers: any;
   };
   schema?: string;

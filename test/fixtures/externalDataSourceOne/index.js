@@ -1,13 +1,20 @@
-import schema from './schema.graphql';
-import resolvers from './resolvers';
-import mocks from './mocks';
-import Connector from './connector';
-import Model from './model';
+const fs = require('fs');
+const path = require('path');
+const resolvers = require('./resolvers');
+const mocks = require('./mocks');
+const Connector = require('./connector');
+const Model = require('./model');
 
-export default {
-  namespace: 'ExternalOne',
-  schema,
-  resolvers,
-  mocks,
-  model: new Model({ connector: new Connector() }),
+const schema = fs
+  .readFileSync(path.resolve(__dirname, './schema.graphql'))
+  .toString();
+
+module.exports = {
+  default: {
+    namespace: 'ExternalOne',
+    schema,
+    resolvers,
+    mocks,
+    model: new Model({ connector: new Connector() }),
+  },
 };

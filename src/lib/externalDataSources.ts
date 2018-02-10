@@ -13,9 +13,10 @@ const getExternalSourcePaths = () => {
 };
 
 const filterInvalidPath = (sourcePath: string) =>
-  sourcePath && sourcePath.length > 0;
+  !!(sourcePath && sourcePath.length > 0);
 
-const filterInvalidSource = (source: IDataSource) => source && source.namespace;
+const filterInvalidSource = (source: IDataSource) =>
+  !!(source && source.namespace);
 
 /**
  * Accepts a relative path and converts it to an absolute path.
