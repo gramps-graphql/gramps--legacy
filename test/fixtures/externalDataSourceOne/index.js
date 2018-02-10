@@ -10,11 +10,9 @@ const schema = fs
   .toString();
 
 module.exports = {
-  default: {
-    namespace: 'ExternalOne',
-    schema,
-    resolvers,
-    mocks,
-    model: new Model({ connector: new Connector() }),
-  },
+  namespace: 'ExternalOne',
+  schema,
+  resolvers,
+  mocks,
+  model: new Model({ connector: new Connector() }),
 };

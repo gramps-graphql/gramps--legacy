@@ -35,7 +35,8 @@ const getAbsolutePath = (relPath: string) =>
  */
 const loadExternalSource = (src: string) => {
   // eslint-disable-next-line global-require, import/no-dynamic-require
-  const source = require(src).default;
+  const externalModule = require(src);
+  const source = externalModule.default || externalModule;
 
   // Update the top-level flag, then warn the user.
   isUsingExternalData = true;

@@ -10,11 +10,9 @@ const schema = fs
   .toString();
 
 module.exports = {
-  default: {
-    namespace: 'ExternalTwo',
-    schema,
-    resolvers,
-    mocks,
-    model: new Model({ connector: new Connector() }),
-  },
+  namespace: 'ExternalTwo',
+  schema,
+  resolvers,
+  mocks,
+  model: new Model({ connector: new Connector() }),
 };
