@@ -1,8 +1,7 @@
+import IStitching from './IStitching';
+
 export default interface IDataSource {
-  stitching?: {
-    linkTypeDefs?: any;
-    resolvers: any;
-  };
+  stitching?: IStitching;
   schema?: string;
   typeDefs?: any;
   resolvers?: any;

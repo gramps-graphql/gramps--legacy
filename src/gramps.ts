@@ -16,11 +16,12 @@ import combineStitchingResolvers from './lib/combineStitchingResolvers';
 import { Request, Response, NextFunction } from 'express';
 import IDataSource from './lib/IDataSource';
 import ILogger from './lib/ILogger';
+import IStitching from './lib/IStitching';
 
 /**
  * Adds supplied options to the Apollo options object.
- * @param  {Object} options  Apollo options for the methods used in GrAMPS
- * @return {Options}          Default options, extended with supplied options
+ * @param options  Apollo options for the methods used in GrAMPS
+ * @return         Default options, extended with supplied options
  */
 const getDefaultApolloOptions = (options: any) => ({
   makeExecutableSchema: {},
@@ -32,6 +33,11 @@ const getDefaultApolloOptions = (options: any) => ({
 interface ICheckTypyDefsOptions {
   schema?: string;
   typeDefs: any;
+  namespace: string;
+}
+
+interface IStitchedDataSource {
+  stitching: IStitching;
   namespace: string;
 }
 
@@ -55,7 +61,7 @@ const checkTypeDefs = ({
  * @param sources     data sources to combine
  * @param shouldMock  whether or not to mock resolvers
  * @param options     additional apollo options
- * @return {Array}               list of executable schemas
+ * @return            list of executable schemas
  */
 const mapSourcesToExecutableSchemas = (
   sources: IDataSource[],
@@ -86,7 +92,9 @@ const mapSourcesToExecutableSchemas = (
 
       return executableSchema;
     })
-    .filter(schema => schema instanceof GraphQLSchema);
+    .filter<GraphQLSchema>(
+      (schema): schema is GraphQLSchema => schema instanceof GraphQLSchema,
+    );
 
 export interface IGrampsInputOptions {
   dataSources?: IDataSource[];
@@ -156,9 +164,11 @@ export function prepare({
     apolloOptions,
   );
 
-  const sourcesWithStitching = sources.filter(source => source.stitching);
+  const sourcesWithStitching = sources.filter<IStitchedDataSource>(
+    (source): source is IStitchedDataSource => !!source.stitching,
+  );
   const linkTypeDefs = sourcesWithStitching.map(
-    source => source.stitching && source.stitching.linkTypeDefs,
+    source => source.stitching.linkTypeDefs,
   );
   const resolvers = combineStitchingResolvers(sourcesWithStitching);
 
