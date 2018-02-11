@@ -1,6 +1,8 @@
-import path from 'path';
+import * as path from 'path';
 import chalk from 'chalk';
 import { EOL } from 'os';
+import IDataSource from './IDataSource';
+import ILogger from './ILogger';
 
 let isUsingExternalData = false;
 
@@ -10,16 +12,19 @@ const getExternalSourcePaths = () => {
   return sources.split(',').map(s => s.trim());
 };
 
-const filterInvalidPath = sourcePath => sourcePath && sourcePath.length > 0;
+const filterInvalidPath = (sourcePath: string) =>
+  !!(sourcePath && sourcePath.length > 0);
 
-const filterInvalidSource = source => source && source.namespace;
+const filterInvalidSource = (source: IDataSource) =>
+  !!(source && source.namespace);
 
 /**
  * Accepts a relative path and converts it to an absolute path.
  * @param  {string} relPath the relative path to a file
  * @return {string}         the absolute path to the file
  */
-const getAbsolutePath = relPath => path.resolve(process.cwd(), relPath);
+const getAbsolutePath = (relPath: string) =>
+  path.resolve(process.cwd(), relPath);
 
 /**
  * This is a hack I’m not crazy about, but dynamic imports per the spec are
@@ -28,9 +33,10 @@ const getAbsolutePath = relPath => path.resolve(process.cwd(), relPath);
  * @param   {string} src the path to load the external data source
  * @returns {object}     the external data source
  */
-const loadExternalSource = src => {
+const loadExternalSource = (src: string) => {
   // eslint-disable-next-line global-require, import/no-dynamic-require
-  const source = require(src).default;
+  const externalModule = require(src);
+  const source = externalModule.default || externalModule;
 
   // Update the top-level flag, then warn the user.
   isUsingExternalData = true;
@@ -45,12 +51,21 @@ const loadExternalSource = src => {
  * @param  {Object} config.logger   logger for outputting the warning
  * @return {void}
  */
-const warnInProduction = ({ sources, logger }) => {
+const warnInProduction = ({
+  sources,
+  logger,
+}: {
+  sources: IDataSource[];
+  logger: ILogger;
+}) => {
   // External data is development-only, so complain if it’s used in production.
   /* istanbul ignore next: this does not affect the app’s behavior */
   if (isUsingExternalData && process.env.NODE_ENV === 'production') {
     const externalSources = sources.reduce(
-      (sourceList, source) => [...sourceList, source.namespace],
+      (sourceList: string[], source: IDataSource) => [
+        ...sourceList,
+        source.namespace,
+      ],
       [],
     );
     const errorMessage = [
@@ -68,7 +83,7 @@ const warnInProduction = ({ sources, logger }) => {
 };
 
 // Use the functions we just declared to identify and load any external sources.
-export const loadDevDataSources = ({ logger }) => {
+export const loadDevDataSources = ({ logger }: { logger: ILogger }) => {
   const sources = getExternalSourcePaths()
     .filter(filterInvalidPath)
     .map(getAbsolutePath)
@@ -82,10 +97,19 @@ export const loadDevDataSources = ({ logger }) => {
   return sources;
 };
 
-const getDataSourceContextArray = sources =>
-  sources.reduce((arr, src) => [...arr, src.namespace], []);
+const getDataSourceContextArray = (sources: IDataSource[]) =>
+  sources.reduce(
+    (arr: string[], src: IDataSource) => [...arr, src.namespace],
+    [],
+  );
 
-const warnForOverrides = ({ overrides, logger }) => {
+const warnForOverrides = ({
+  overrides,
+  logger,
+}: {
+  overrides: string[];
+  logger: ILogger;
+}) => {
   if (!overrides.length) {
     return;
   }
@@ -108,7 +132,15 @@ const warnForOverrides = ({ overrides, logger }) => {
   logger.warn(message.join(EOL));
 };
 
-export const overrideLocalSources = ({ sources, devSources, logger }) => {
+export const overrideLocalSources = ({
+  sources,
+  devSources,
+  logger,
+}: {
+  sources: IDataSource[];
+  devSources: IDataSource[];
+  logger: ILogger;
+}) => {
   const overrides = getDataSourceContextArray(devSources);
   const notOverridden = sources.filter(
     src => !overrides.includes(src.namespace),

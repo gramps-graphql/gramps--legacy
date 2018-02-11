@@ -1,6 +1,6 @@
 class GraphQLModel {}
 
-export default class ExternalTwoModel extends GraphQLModel {
+module.exports = class ExternalTwoModel extends GraphQLModel {
   // eslint-disable-next-line class-methods-use-this
   getDataById(id) {
     return Promise.resolve({
@@ -8,4 +8,4 @@ export default class ExternalTwoModel extends GraphQLModel {
       name: 'External Two Data Source',
     });
   }
-}
+};

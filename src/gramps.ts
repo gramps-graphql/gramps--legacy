@@ -13,19 +13,39 @@ import mapResolvers from './lib/mapResolvers';
 import rootSource from './rootSource';
 import combineStitchingResolvers from './lib/combineStitchingResolvers';
 
+import { Request, Response, NextFunction } from 'express';
+import IDataSource from './lib/IDataSource';
+import ILogger from './lib/ILogger';
+import IStitching from './lib/IStitching';
+
 /**
  * Adds supplied options to the Apollo options object.
- * @param  {Object} options  Apollo options for the methods used in GrAMPS
- * @return {Object}          Default options, extended with supplied options
+ * @param options  Apollo options for the methods used in GrAMPS
+ * @return         Default options, extended with supplied options
  */
-const getDefaultApolloOptions = options => ({
+const getDefaultApolloOptions = (options: any) => ({
   makeExecutableSchema: {},
   addMockFunctionsToSchema: {},
   apolloServer: { ...options.graphqlExpress },
   ...options,
 });
 
-const checkTypeDefs = ({ schema, typeDefs, namespace }) => {
+interface ICheckTypyDefsOptions {
+  schema?: string;
+  typeDefs: any;
+  namespace: string;
+}
+
+interface IStitchedDataSource {
+  stitching: IStitching;
+  namespace: string;
+}
+
+const checkTypeDefs = ({
+  schema,
+  typeDefs,
+  namespace,
+}: ICheckTypyDefsOptions) => {
   if (typeof schema === 'string') {
     console.warn(
       namespace,
@@ -38,12 +58,16 @@ const checkTypeDefs = ({ schema, typeDefs, namespace }) => {
 
 /**
  * Maps data sources and returns array of executable schema
- * @param  {Array}   sources     data sources to combine
- * @param  {Boolean} shouldMock  whether or not to mock resolvers
- * @param  {Object}  options     additional apollo options
- * @return {Array}               list of executable schemas
+ * @param sources     data sources to combine
+ * @param shouldMock  whether or not to mock resolvers
+ * @param options     additional apollo options
+ * @return            list of executable schemas
  */
-const mapSourcesToExecutableSchemas = (sources, shouldMock, options) =>
+const mapSourcesToExecutableSchemas = (
+  sources: IDataSource[],
+  shouldMock: boolean,
+  options: any,
+) =>
   sources
     .map(({ schema, typeDefs, resolvers, mocks, namespace }) => {
       const sourceTypeDefs = checkTypeDefs({ schema, typeDefs, namespace });
@@ -68,7 +92,23 @@ const mapSourcesToExecutableSchemas = (sources, shouldMock, options) =>
 
       return executableSchema;
     })
-    .filter(schema => schema instanceof GraphQLSchema);
+    .filter<GraphQLSchema>(
+      (schema): schema is GraphQLSchema => schema instanceof GraphQLSchema,
+    );
+
+export interface IGrampsInputOptions {
+  dataSources?: IDataSource[];
+  enableMockData?: boolean;
+  extraContext?: (req: Request) => any;
+  logger?: ILogger;
+  apollo?: any;
+}
+
+export interface IGrampsRequest extends Request {
+  gramps: {
+    getContext: (req: Request) => any;
+  };
+}
 
 /**
  * Combine schemas, optionally add mocks, and configure `apollo-server-express`.
@@ -94,20 +134,19 @@ const mapSourcesToExecutableSchemas = (sources, shouldMock, options) =>
  * @see http://dev.apollodata.com/tools/graphql-tools/mocking.html#addMockFunctionsToSchema
  * @see http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#makeExecutableSchema
  *
- * @param  {Array?}    config.dataSources     data sources to combine
- * @param  {boolean?}  config.enableMockData  whether to add mock resolvers
- * @param  {Function?} config.extraContext    function to add additional context
- * @param  {Object?}   config.logger          requires `info` & `error` methods
- * @param  {Object?}   config.apollo          options for Apollo functions
- * @return {Function}                         req => options for `graphqlExpress()`
+ * @param  config.dataSources     data sources to combine
+ * @param  config.enableMockData  whether to add mock resolvers
+ * @param  config.extraContext    function to add additional context
+ * @param  config.logger          requires `info` & `error` methods
+ * @param  config.apollo          options for Apollo functions
  */
 export function prepare({
   dataSources = [],
   enableMockData = process.env.GRAMPS_MODE === 'mock',
-  extraContext = req => ({}), // eslint-disable-line no-unused-vars
+  extraContext = (req: Request) => ({}), // eslint-disable-line no-unused-vars
   logger = console,
   apollo = {},
-} = {}) {
+}: IGrampsInputOptions = {}) {
   // Make sure all Apollo options are set properly to avoid undefined errors.
   const apolloOptions = getDefaultApolloOptions(apollo);
 
@@ -118,14 +157,16 @@ export function prepare({
     logger,
   });
 
-  const allSources = [rootSource, ...sources];
+  const allSources: IDataSource[] = [rootSource, ...sources];
   const schemas = mapSourcesToExecutableSchemas(
     allSources,
     enableMockData,
     apolloOptions,
   );
 
-  const sourcesWithStitching = sources.filter(source => source.stitching);
+  const sourcesWithStitching = sources.filter<IStitchedDataSource>(
+    (source): source is IStitchedDataSource => !!source.stitching,
+  );
   const linkTypeDefs = sourcesWithStitching.map(
     source => source.stitching.linkTypeDefs,
   );
@@ -136,7 +177,7 @@ export function prepare({
     resolvers,
   });
 
-  const getContext = req => {
+  const getContext = (req: Request) => {
     const extra = extraContext(req);
     return sources.reduce((allContext, source) => {
       const sourceContext =
@@ -154,7 +195,7 @@ export function prepare({
   return {
     schema,
     context: getContext,
-    addContext: (req, res, next) => {
+    addContext: (req: IGrampsRequest, res: Response, next: NextFunction) => {
       req.gramps = getContext(req);
       next();
     },
@@ -163,9 +204,9 @@ export function prepare({
   };
 }
 
-export default function gramps(...args) {
+export default function gramps(...args: any[]) {
   const options = prepare(...args);
-  return req => ({
+  return (req?: IGrampsRequest) => ({
     ...options,
     context: options.context(req),
   });

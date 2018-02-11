@@ -4,10 +4,16 @@ import {
 } from '../../src/lib/externalDataSources';
 import defaultLogger from '../../src/lib/defaultLogger';
 
-jest.mock('../../src/lib/defaultLogger', () => ({
+const logger = {
+  error: jest.fn(),
   info: jest.fn(),
   warn: jest.fn(),
+};
+
+jest.mock('../../src/lib/defaultLogger', () => ({
   error: jest.fn(),
+  info: jest.fn(),
+  warn: jest.fn(),
 }));
 
 describe('lib/externalDataSources', () => {
@@ -17,7 +23,7 @@ describe('lib/externalDataSources', () => {
 
   describe('loadDevDataSources()', () => {
     it('returns an empty array if no external sources are specified', () => {
-      const sources = loadDevDataSources({ logger: defaultLogger });
+      const sources = loadDevDataSources({ logger });
 
       expect(sources).toBeDefined();
       expect(sources).toHaveLength(0);
@@ -25,7 +31,7 @@ describe('lib/externalDataSources', () => {
 
     it('returns an external source if one is supplied', () => {
       process.env.GRAMPS_DATA_SOURCES = './test/fixtures/externalDataSourceOne';
-      const sources = loadDevDataSources({ logger: defaultLogger });
+      const sources = loadDevDataSources({ logger });
 
       expect(sources).toBeDefined();
       expect(sources).toHaveLength(1);
@@ -35,7 +41,7 @@ describe('lib/externalDataSources', () => {
     it('returns two external sources if two are supplied', () => {
       process.env.GRAMPS_DATA_SOURCES =
         './test/fixtures/externalDataSourceOne, ./test/fixtures/externalDataSourceTwo';
-      const sources = loadDevDataSources({ logger: defaultLogger });
+      const sources = loadDevDataSources({ logger });
 
       expect(sources).toBeDefined();
       expect(sources).toHaveLength(2);
@@ -66,9 +72,7 @@ describe('lib/externalDataSources', () => {
         { namespace: 'Three', value: 'external' },
       ];
 
-      expect(
-        overrideLocalSources({ sources, devSources, logger: defaultLogger }),
-      ).toEqual([
+      expect(overrideLocalSources({ sources, devSources, logger })).toEqual([
         { namespace: 'One', value: 'local' },
         { namespace: 'Two', value: 'external' },
         { namespace: 'Three', value: 'external' },
@@ -80,7 +84,7 @@ describe('lib/externalDataSources', () => {
         overrideLocalSources({
           sources,
           devSources: [],
-          logger: defaultLogger,
+          logger,
         }),
       ).toEqual(sources);
     });

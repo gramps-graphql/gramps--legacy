@@ -1,4 +1,4 @@
-import pkg from '../package.json';
+import pkg from "../package.json";
 
 const typeDefs = `
   type Query {
@@ -13,8 +13,8 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    grampsVersion: /* istanbul ignore next */ () => pkg.version,
-  },
+    grampsVersion: /* istanbul ignore next */ (): string => pkg.version
+  }
 };
 
-export default { typeDefs, resolvers };
+export default { typeDefs, resolvers, namespace: "Root" };

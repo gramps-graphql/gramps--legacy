@@ -13,7 +13,7 @@ describe('lib/combineStitchingResolvers', () => {
           age: mergeInfo,
         },
       }),
-    ].map(resolvers => ({ stitching: { resolvers } }));
+    ].map(resolvers => ({ stitching: { resolvers }, namespace: '' }));
     const output = {
       User: {
         name: 'TEST',
