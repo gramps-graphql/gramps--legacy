@@ -158,7 +158,9 @@ yarn add @gramps/gramps apollo-server-express body-parser graphql
   }
   
   const app = Express();
-+ const GraphQLOptions = gramps();
++ const GraphQLOptions = gramps({
++   dataSources: []    
++ });
   
 - app.get('/', (_, res) => res.send('Hello world!'));
 + app.use(bodyParser.json());
