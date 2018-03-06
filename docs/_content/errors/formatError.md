@@ -51,7 +51,7 @@ Description: Could not load the given xkcd comic
 Error Code: XKCDModel_Error
 GraphQL Model: XKCDModel
 Target Endpoint: https://xkcd.com/2000/info.0.json
-Documentation: https://ibm.biz/gramps-data-source-tutorial
+Documentation: https://xkcd.com/json.html
 Data: {
     "id": "2000"
 }
