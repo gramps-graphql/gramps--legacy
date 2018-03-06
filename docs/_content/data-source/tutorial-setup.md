@@ -71,7 +71,7 @@ Open `src/index.js` and update the context:
   
   /*
    * For more information on the main data source object, see
-   * https://ibm.biz/graphql-data-source-main
+   * https://gramps.js.org/api/gramps/#gramps
    */
   export default {
 -   // TODO: Rename the context to describe the data source.

@@ -59,7 +59,8 @@ const warnInProduction = ({ sources, logger }) => {
       '',
       `     External source(s): ${externalSources.join(', ')}`,
       '',
-      '     See https://ibm.biz/gramps-data-source-tutorial for details.',
+      '     For details, see:',
+      '       https://gramps.js.org/data-source/data-source-overview/',
       '======================================================================',
     ].join(EOL);
 
@@ -92,7 +93,7 @@ const warnForOverrides = ({ overrides, logger }) => {
 
   const message = [
     EOL,
-    `========================= WARNING ==========================`,
+    `============================ WARNING =============================`,
     `     Existing data sources have been overridden by`,
     `     development-only data sources. This WILL NOT work`,
     `     in production environments.`,
@@ -100,8 +101,9 @@ const warnForOverrides = ({ overrides, logger }) => {
     `     These data sources are running in dev-only mode:`,
     `     - ${overrides.join(`${EOL}     - `)}`,
     ``,
-    `     Details: https://ibm.biz/graphql-data-source`,
-    `============================================================`,
+    `     Details: `,
+    `     https://gramps.js.org/data-source/data-source-overview/`,
+    `==================================================================`,
     EOL,
   ];
 
