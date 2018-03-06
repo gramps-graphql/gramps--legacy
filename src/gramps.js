@@ -11,7 +11,6 @@ import {
 import mapResolvers from './lib/mapResolvers';
 
 import rootSource from './rootSource';
-import combineStitchingResolvers from './lib/combineStitchingResolvers';
 
 /**
  * Adds supplied options to the Apollo options object.
@@ -129,7 +128,9 @@ export function prepare({
   const linkTypeDefs = sourcesWithStitching.map(
     source => source.stitching.linkTypeDefs,
   );
-  const resolvers = combineStitchingResolvers(sourcesWithStitching);
+  const resolvers = sourcesWithStitching.map(
+    source => source.stitching.resolvers,
+  );
 
   const schema = mergeSchemas({
     schemas: [...schemas, ...linkTypeDefs],
