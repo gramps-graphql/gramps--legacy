@@ -9,6 +9,8 @@ node_js:
 - "8"
 notifications:
   email: false
+install:
+- yarn install --ignore-engines
 before_script:
 - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
 - chmod +x ./cc-test-reporter
@@ -19,7 +21,7 @@ after_script:
 - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 after_success:
 - yarn build
-- yarn semantic-release
+- npm run travis-deploy-once "npm run semantic-release"
 branches:
   only:
   - master
