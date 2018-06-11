@@ -55,7 +55,7 @@
     "jest": "^22.0.1",
     "nodemon": "^1.11.0",
     "prettier": "^1.5.3",
-    "semantic-release": "^12.4.1",
+    "semantic-release": "^15.5.2",
     "supertest": "^3.0.0",
     "travis-deploy-once": "^4.3.4"
   },
