@@ -62,13 +62,8 @@ describe('GrAMPS', () => {
   describe('gramps()', () => {
     it('creates a valid schema and empty context with no arguments', () => {
       const getGrampsContext = gramps();
-
-      expect(getGrampsContext()).toEqual(
-        expect.objectContaining({
-          schema: expect.any(GraphQLSchema),
-          context: {},
-        }),
-      );
+      expect(getGrampsContext.context()).toEqual({});
+      expect(getGrampsContext.schema).toBeInstanceOf(GraphQLSchema);
     });
 
     it('warns for use of schema', () => {
@@ -114,9 +109,9 @@ describe('GrAMPS', () => {
         },
       ];
 
-      const grampsConfig = gramps({ dataSources, enableMockData: false })();
+      const grampsConfig = gramps({ dataSources, enableMockData: false });
 
-      expect(grampsConfig.context).toEqual({
+      expect(grampsConfig.context()).toEqual({
         Foo: {
           foo: 'test',
         },
@@ -133,9 +128,9 @@ describe('GrAMPS', () => {
       const grampsConfig = gramps({
         dataSources: [{ namespace: 'FOO', context: { source: 'context' } }],
         extraContext: () => ({ extra: 'context' }),
-      })();
+      });
 
-      expect(grampsConfig.context).toEqual({
+      expect(grampsConfig.context()).toEqual({
         FOO: { extra: 'context', source: 'context' },
         extra: 'context',
       });
@@ -155,7 +150,7 @@ describe('GrAMPS', () => {
           },
         ],
         enableMockData: true,
-      })();
+      });
 
       // The first call is the GrAMPS root data source, which has no mocks.
       expect(spy.mock.calls[1][0].mocks).toEqual({
