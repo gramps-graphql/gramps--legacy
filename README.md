@@ -32,7 +32,7 @@ const server = new ApolloServer(GraphQLOptions)
 server.applyMiddleware({ app, path: '/graphql' })
 
 app.listen({ port: 8080 }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  console.log(`🚀 Server ready at http://localhost:8080${server.graphqlPath}`)
 )
 ```
 
