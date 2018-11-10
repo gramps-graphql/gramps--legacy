@@ -22,19 +22,21 @@ const Express = require('express');
 const bodyParser = require('body-parser');
 const gramps = require('@gramps/gramps').default;
 const { GraphQLSchema } = require('graphql');
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 
 const app = Express();
 const GraphQLOptions = gramps();
 
 app.use(bodyParser.json());
-app.use('/graphql', graphqlExpress(GraphQLOptions));
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+const server = new ApolloServer(GraphQLOptions)
+server.applyMiddleware({ app, path: '/graphql' })
 
-app.listen(8080, () => console.log(`=> running at http://localhost:8080/`));
+app.listen({ port: 8080 }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+)
 ```
 
-Start the server with `node index.js`, then open http://localhost:8080/graphiql to see the GraphiQL user interface.
+Start the server with `node index.js`, then open http://localhost:8080/graphql to see the GraphiQL user interface.
 
 For a more in-depth starter, [see the 5-minute quickstart](https://gramps.js.org/overview/quickstart/) in our documentation.
 
