@@ -12,29 +12,25 @@
 To get a GrAMPS+[Apollo](https://github.com/apollographql/apollo-server/tree/master/packages/apollo-server-express) gateway up and running, start by installing the required packages:
 
 ```bash
-yarn add @gramps/gramps express apollo-server-express body-parser graphql
+yarn add @gramps/gramps apollo-server-express graphql
 ```
 
 Next, create a file called `index.js` and put the following inside:
 
 ```js
-const Express = require('express');
-const bodyParser = require('body-parser');
 const gramps = require('@gramps/gramps').default;
-const { GraphQLSchema } = require('graphql');
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 
-const app = Express();
 const GraphQLOptions = gramps();
 
-app.use(bodyParser.json());
-app.use('/graphql', graphqlExpress(GraphQLOptions));
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+const server = new ApolloServer(GraphQLOptions);
 
-app.listen(8080, () => console.log(`=> running at http://localhost:8080/`));
+server.listen().then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`)
+});
 ```
 
-Start the server with `node index.js`, then open http://localhost:8080/graphiql to see the GraphiQL user interface.
+Start the server with `node index.js`, then open http://localhost:4000/graphql to see the GraphQL Playground user interface.
 
 For a more in-depth starter, [see the 5-minute quickstart](https://gramps.js.org/overview/quickstart/) in our documentation.
 
