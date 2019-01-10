@@ -166,8 +166,9 @@ export function prepare({
 
 export default function gramps(...args) {
   const options = prepare(...args);
-  return req => ({
+
+  return {
     ...options,
-    context: options.context(req),
-  });
+    context: ({ req } = {}) => options.context(req),
+  };
 }
