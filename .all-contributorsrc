@@ -46,6 +46,25 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ryanomackey",
+      "name": "Ryan Mackey",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/17710824?v=4",
+      "profile": "https://ryanomackey.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "shalkam",
+      "name": "Mostafa Sholkamy",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/5118439?v=4",
+      "profile": "https://twitter.com/shalkam",
+      "contributions": [
+        "code"
+      ]
     }
-  ]
+  ],
+  "repoType": "github"
 }
