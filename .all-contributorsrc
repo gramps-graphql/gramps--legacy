@@ -46,6 +46,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ryanomackey",
+      "name": "Ryan Mackey",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/17710824?v=4",
+      "profile": "https://ryanomackey.com",
+      "contributions": [
+        "code"
+      ]
     }
-  ]
+  ],
+  "repoType": "github"
 }
