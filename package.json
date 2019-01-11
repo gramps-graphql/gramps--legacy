@@ -24,7 +24,10 @@
     "test": "npm run lint --silent && npm run test:unit --silent",
     "test:unit": "cross-env NODE_ENV=test LOG4JS_LEVEL='OFF' jest --coverage",
     "semantic-release": "semantic-release",
-    "travis-deploy-once": "travis-deploy-once"
+    "travis-deploy-once": "travis-deploy-once",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate",
+    "contributors:check": "all-contributors check"
   },
   "dependencies": {
     "chalk": "^2.1.0",
@@ -35,6 +38,7 @@
     "graphql": ">= 0.11.7 < 1"
   },
   "devDependencies": {
+    "all-contributors-cli": "^5.7.0",
     "apollo-server-express": "^1.1.2",
     "babel-cli": "^6.24.1",
     "babel-eslint": "^8.0.1",
