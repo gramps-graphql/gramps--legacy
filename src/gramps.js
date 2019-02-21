@@ -13,8 +13,6 @@ import handleRemoteSchemas from './lib/handleRemoteSchemas';
 
 import rootSource from './rootSource';
 
-console.log('FUCK ME');
-
 /**
  * Adds supplied options to the Apollo options object.
  * @param  {Object} options  Apollo options for the methods used in GrAMPS

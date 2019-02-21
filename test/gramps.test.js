@@ -8,8 +8,8 @@ describe('GrAMPS', () => {
   });
 
   describe('prepare()', () => {
-    it('addContext() adds gramps property to request object', () => {
-      const { addContext } = prepare();
+    it('addContext() adds gramps property to request object', async () => {
+      const { addContext } = await prepare();
       const next = jest.genMockFn();
       const req = {};
       addContext(req, {}, next);
@@ -17,8 +17,8 @@ describe('GrAMPS', () => {
       expect(next).toBeCalled();
     });
 
-    test('passes through apolloServer options', () => {
-      const gramps = prepare({
+    test('passes through apolloServer options', async () => {
+      const gramps = await prepare({
         apollo: {
           apolloServer: {
             debug: true,
@@ -29,8 +29,8 @@ describe('GrAMPS', () => {
       expect(gramps.debug).toBe(true);
     });
 
-    test('passes through apolloServer options when passed in old graphqlExpress arg', () => {
-      const gramps = prepare({
+    test('passes through apolloServer options when passed in old graphqlExpress arg', async () => {
+      const gramps = await prepare({
         apollo: {
           graphqlExpress: {
             debug: true,
@@ -60,8 +60,8 @@ describe('GrAMPS', () => {
   });
 
   describe('gramps()', () => {
-    it('creates a valid schema and context with no arguments', () => {
-      const GraphQLOptions = gramps();
+    it('creates a valid schema and context with no arguments', async () => {
+      const GraphQLOptions = await gramps();
 
       expect(GraphQLOptions).toEqual(
         expect.objectContaining({
@@ -95,7 +95,7 @@ describe('GrAMPS', () => {
       return expect(console.warn).toBeCalled();
     });
 
-    it('properly combines contexts', () => {
+    it('properly combines contexts', async () => {
       const dataSources = [
         { namespace: 'Foo', context: { foo: 'test' } },
         { namespace: 'Bar', context: { bar: 'test' } },
@@ -114,7 +114,7 @@ describe('GrAMPS', () => {
         },
       ];
 
-      const grampsConfig = gramps({ dataSources, enableMockData: false });
+      const grampsConfig = await gramps({ dataSources, enableMockData: false });
 
       expect(grampsConfig.context()).toEqual({
         Foo: {
@@ -129,8 +129,8 @@ describe('GrAMPS', () => {
       });
     });
 
-    it('properly adds extra context', () => {
-      const grampsConfig = gramps({
+    it('properly adds extra context', async () => {
+      const grampsConfig = await gramps({
         dataSources: [{ namespace: 'FOO', context: { source: 'context' } }],
         extraContext: () => ({ extra: 'context' }),
       });
