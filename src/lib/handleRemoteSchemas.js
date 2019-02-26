@@ -11,6 +11,7 @@ export default async remoteSchemaURLs => {
         fetch,
       });
       const link = setContext((request, previousContext) => {
+        /* istanbul ignore next */
         if (
           previousContext.graphqlContext &&
           previousContext.graphqlContext.req
@@ -31,6 +32,7 @@ export default async remoteSchemaURLs => {
         schema,
         link,
       });
+
       return executableSchema;
     }),
   );
