@@ -60,10 +60,15 @@ describe('GrAMPS', () => {
   });
 
   describe('gramps()', () => {
-    it('creates a valid schema and empty context with no arguments', () => {
-      const getGrampsContext = gramps();
-      expect(getGrampsContext.context()).toEqual({});
-      expect(getGrampsContext.schema).toBeInstanceOf(GraphQLSchema);
+    it('creates a valid schema and context with no arguments', () => {
+      const GraphQLOptions = gramps();
+
+      expect(GraphQLOptions).toEqual(
+        expect.objectContaining({
+          schema: expect.any(GraphQLSchema),
+          context: expect.any(Function),
+        }),
+      );
     });
 
     it('warns for use of schema', () => {

@@ -1,7 +1,7 @@
 <a href="https://gramps.js.org/"><img src="https://gramps.js.org/assets/img/gramps-banner.png" alt="GrAMPS · An easier way to manage the data sources powering your GraphQL server" width="450"></a>
 
 # GrAMPS — Composable, Shareable Data Sources for GraphQL
-[![license](https://img.shields.io/npm/l/@gramps/gramps.svg)](https://github.com/gramps-graphql/gramps/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/@gramps/gramps.svg?style=flat)](https://www.npmjs.com/package/@gramps/gramps) [![Build Status](https://travis-ci.org/gramps-graphql/gramps.svg?branch=master)](https://travis-ci.org/gramps-graphql/gramps) [![Maintainability](https://api.codeclimate.com/v1/badges/ac264833fac1fbd1afe0/maintainability)](https://codeclimate.com/github/gramps-graphql/gramps/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/ac264833fac1fbd1afe0/test_coverage)](https://codeclimate.com/github/gramps-graphql/gramps/test_coverage) [![Greenkeeper badge](https://badges.greenkeeper.io/gramps-graphql/gramps.svg)](https://greenkeeper.io/) [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
+[![license](https://img.shields.io/npm/l/@gramps/gramps.svg)](https://github.com/gramps-graphql/gramps/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/@gramps/gramps.svg?style=flat)](https://www.npmjs.com/package/@gramps/gramps) [![Build Status](https://travis-ci.org/gramps-graphql/gramps.svg?branch=master)](https://travis-ci.org/gramps-graphql/gramps) [![Maintainability](https://api.codeclimate.com/v1/badges/ac264833fac1fbd1afe0/maintainability)](https://codeclimate.com/github/gramps-graphql/gramps/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/ac264833fac1fbd1afe0/test_coverage)](https://codeclimate.com/github/gramps-graphql/gramps/test_coverage) [![Greenkeeper badge](https://badges.greenkeeper.io/gramps-graphql/gramps.svg)](https://greenkeeper.io/) [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors)
 
 **An easier way to manage the data sources powering your GraphQL server.**
 
@@ -12,31 +12,25 @@
 To get a GrAMPS+[Apollo](https://github.com/apollographql/apollo-server/tree/master/packages/apollo-server-express) gateway up and running, start by installing the required packages:
 
 ```bash
-yarn add @gramps/gramps express apollo-server-express body-parser graphql
+yarn add @gramps/gramps apollo-server-express graphql
 ```
 
 Next, create a file called `index.js` and put the following inside:
 
 ```js
-const Express = require('express');
-const bodyParser = require('body-parser');
 const gramps = require('@gramps/gramps').default;
-const { GraphQLSchema } = require('graphql');
 const { ApolloServer } = require('apollo-server-express');
 
-const app = Express();
 const GraphQLOptions = gramps();
 
-app.use(bodyParser.json());
-const server = new ApolloServer(GraphQLOptions)
-server.applyMiddleware({ app, path: '/graphql' })
+const server = new ApolloServer(GraphQLOptions);
 
-app.listen({ port: 8080 }, () =>
-  console.log(`🚀 Server ready at http://localhost:8080${server.graphqlPath}`)
-)
+server.listen().then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`)
+});
 ```
 
-Start the server with `node index.js`, then open http://localhost:8080/graphql to see the GraphiQL user interface.
+Start the server with `node index.js`, then open http://localhost:4000/graphql to see the GraphQL Playground user interface.
 
 For a more in-depth starter, [see the 5-minute quickstart](https://gramps.js.org/overview/quickstart/) in our documentation.
 
@@ -54,8 +48,8 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-| [<img src="https://avatars2.githubusercontent.com/u/163561?v=4" width="100px;"/><br /><sub><b>Jason Lengstorf</b></sub>](https://code.lengstorf.com)<br />[💻](https://github.com/gramps-graphql/gramps/commits?author=jlengstorf "Code") [🎨](#design-jlengstorf "Design") [📖](https://github.com/gramps-graphql/gramps/commits?author=jlengstorf "Documentation") [📢](#talk-jlengstorf "Talks") | [<img src="https://avatars1.githubusercontent.com/u/5205440?v=4" width="100px;"/><br /><sub><b>Eric Wyne</b></sub>](https://github.com/ecwyne)<br />[💻](https://github.com/gramps-graphql/gramps/commits?author=ecwyne "Code") [🤔](#ideas-ecwyne "Ideas, Planning, & Feedback") | [<img src="https://avatars1.githubusercontent.com/u/2746394?v=4" width="100px;"/><br /><sub><b>Cory Cook</b></sub>](https://github.com/corycook)<br />[🤔](#ideas-corycook "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/8397708?v=4" width="100px;"/><br /><sub><b>Michael Fix</b></sub>](https://mfix22.github.io)<br />[💻](https://github.com/gramps-graphql/gramps/commits?author=mfix22 "Code") |
-| :---: | :---: | :---: | :---: |
+| [<img src="https://avatars2.githubusercontent.com/u/163561?v=4" width="100px;"/><br /><sub><b>Jason Lengstorf</b></sub>](https://code.lengstorf.com)<br />[💻](https://github.com/gramps-graphql/gramps/commits?author=jlengstorf "Code") [🎨](#design-jlengstorf "Design") [📖](https://github.com/gramps-graphql/gramps/commits?author=jlengstorf "Documentation") [📢](#talk-jlengstorf "Talks") | [<img src="https://avatars1.githubusercontent.com/u/5205440?v=4" width="100px;"/><br /><sub><b>Eric Wyne</b></sub>](https://github.com/ecwyne)<br />[💻](https://github.com/gramps-graphql/gramps/commits?author=ecwyne "Code") [🤔](#ideas-ecwyne "Ideas, Planning, & Feedback") | [<img src="https://avatars1.githubusercontent.com/u/2746394?v=4" width="100px;"/><br /><sub><b>Cory Cook</b></sub>](https://github.com/corycook)<br />[🤔](#ideas-corycook "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/8397708?v=4" width="100px;"/><br /><sub><b>Michael Fix</b></sub>](https://mfix22.github.io)<br />[💻](https://github.com/gramps-graphql/gramps/commits?author=mfix22 "Code") | [<img src="https://avatars2.githubusercontent.com/u/17710824?v=4" width="100px;"/><br /><sub><b>Ryan Mackey</b></sub>](https://ryanomackey.com)<br />[💻](https://github.com/gramps-graphql/gramps/commits?author=ryanomackey "Code") | [<img src="https://avatars1.githubusercontent.com/u/5118439?v=4" width="100px;"/><br /><sub><b>Mostafa Sholkamy</b></sub>](https://twitter.com/shalkam)<br />[💻](https://github.com/gramps-graphql/gramps/commits?author=shalkam "Code") |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
