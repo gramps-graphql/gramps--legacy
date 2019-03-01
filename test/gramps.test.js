@@ -13,7 +13,7 @@ describe('GrAMPS', () => {
       const next = jest.genMockFn();
       const req = {};
       addContext(req, {}, next);
-      expect(req).toEqual({ gramps: {} });
+      expect(req.gramps).resolves.toEqual({});
       expect(next).toBeCalled();
     });
 
@@ -115,8 +115,7 @@ describe('GrAMPS', () => {
       ];
 
       const grampsConfig = gramps({ dataSources, enableMockData: false });
-
-      expect(grampsConfig.context()).toEqual({
+      expect(grampsConfig.context()).resolves.toEqual({
         Foo: {
           foo: 'test',
         },
@@ -135,7 +134,7 @@ describe('GrAMPS', () => {
         extraContext: () => ({ extra: 'context' }),
       });
 
-      expect(grampsConfig.context()).toEqual({
+      expect(grampsConfig.context()).resolves.toEqual({
         FOO: { extra: 'context', source: 'context' },
         extra: 'context',
       });

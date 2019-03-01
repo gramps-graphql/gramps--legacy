@@ -137,19 +137,17 @@ export function prepare({
     resolvers,
   });
 
-  const getContext = req => {
-    const extra = extraContext(req);
-    return sources.reduce((allContext, source) => {
+  const getContext = async req => {
+    const extra = await extraContext(req);
+    const allContext = {};
+    for (const source of sources) {
       const sourceContext =
         typeof source.context === 'function'
-          ? source.context(req)
+          ? await source.context(req)
           : source.context;
-
-      return {
-        ...allContext,
-        [source.namespace]: { ...extra, ...sourceContext },
-      };
-    }, extra);
+      allContext[source.namespace] = { ...extra, ...sourceContext };
+    }
+    return allContext;
   };
 
   return {
