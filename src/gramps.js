@@ -167,6 +167,6 @@ export default function gramps(...args) {
 
   return {
     ...options,
-    context: ({ req } = {}) => options.context(req),
+    context: ({ req, connection } = {}) => options.context({ req, connection }),
   };
 }
