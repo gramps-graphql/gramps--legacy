@@ -50,7 +50,7 @@
     "cpy-cli": "^1.0.1",
     "cross-env": "^5.1.1",
     "del-cli": "^1.1.0",
-    "eslint": "^4.2.0",
+    "eslint": "^5.15.3",
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-config-prettier": "^2.3.0",
     "eslint-plugin-import": "^2.3.0",
