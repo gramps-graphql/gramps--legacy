@@ -19,15 +19,19 @@ Next, create a file called `index.js` and put the following inside:
 
 ```js
 const gramps = require('@gramps/gramps').default;
-const { ApolloServer } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server');
 
-const GraphQLOptions = gramps();
+const getGraphQLServer = async () => {
+	const GraphQLOptions = await gramps();
 
-const server = new ApolloServer(GraphQLOptions);
+	const server = new ApolloServer({...GraphQLOptions});
 
-server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`)
-});
+	server.listen().then(({ url }) => {
+	  console.log(`🚀 Server ready at ${url}`)
+	});
+};
+
+getGraphQLServer();
 ```
 
 Start the server with `node index.js`, then open http://localhost:4000/graphql to see the GraphQL Playground user interface.
@@ -38,7 +42,7 @@ For a more in-depth starter, [see the 5-minute quickstart](https://gramps.js.org
 
 GrAMPS is an attempt to create a standard for organizing GraphQL data source repositories, which allows for multiple data sources to be composed together in a plugin-like architecture.
 
-The ability to combine independently managed data sources into a single GraphQL server is a core requirement for IBM Cloud’s microservice architecture. We have dozens of teams who expose data, so a single codebase with all GraphQL data sources inside was not an option; we needed a way to give each team control of their data while still maintaining the ability to unify and expose our data layer under a single GraphQL microservice. 
+The ability to combine independently managed data sources into a single GraphQL server is a core requirement for IBM Cloud’s microservice architecture. We have dozens of teams who expose data, so a single codebase with all GraphQL data sources inside was not an option; we needed a way to give each team control of their data while still maintaining the ability to unify and expose our data layer under a single GraphQL microservice.
 
 GrAMPS solves this problem by splitting each data source into independent packages that are composed together into a single GraphQL server.
 

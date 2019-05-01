@@ -4,9 +4,8 @@ cache:
   directories:
   - node_modules
 node_js:
-- "6"
-- "7"
 - "8"
+- "10"
 notifications:
   email: false
 install:

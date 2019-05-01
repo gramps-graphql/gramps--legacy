@@ -9,6 +9,7 @@ import {
   overrideLocalSources,
 } from './lib/externalDataSources';
 import mapResolvers from './lib/mapResolvers';
+import handleRemoteSchemas from './lib/handleRemoteSchemas';
 
 import rootSource from './rootSource';
 
@@ -100,7 +101,7 @@ const mapSourcesToExecutableSchemas = (sources, shouldMock, options) =>
  * @param  {Object?}   config.apollo          options for Apollo functions
  * @return {Function}                         req => options for `graphqlExpress()`
  */
-export function prepare({
+export async function prepare({
   dataSources = [],
   enableMockData = process.env.GRAMPS_MODE === 'mock',
   extraContext = req => ({}), // eslint-disable-line no-unused-vars
@@ -132,8 +133,13 @@ export function prepare({
     source => source.stitching.resolvers,
   );
 
+  const remoteSources = sources.filter(source => source.remoteSchema);
+  const remoteSchemaURLs = remoteSources.map(source => source.remoteSchema);
+
+  const remoteSchemas = await handleRemoteSchemas(remoteSchemaURLs);
+
   const schema = mergeSchemas({
-    schemas: [...schemas, ...linkTypeDefs],
+    schemas: [...schemas, ...linkTypeDefs, ...remoteSchemas],
     resolvers,
   });
 
@@ -164,8 +170,8 @@ export function prepare({
   };
 }
 
-export default function gramps(...args) {
-  const options = prepare(...args);
+export default async function gramps(...args) {
+  const options = await prepare(...args);
 
   return {
     ...options,
