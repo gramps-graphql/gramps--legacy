@@ -37,7 +37,7 @@
     "graphql-tag": "^2.10.1",
     "graphql-tools": "^2.20.2",
     "graphql-upload": "^8.0.0",
-    "node-fetch": "^2.3.0"
+    "isomorphic-fetch": "^2.2.1"
   },
   "peerDependencies": {
     "graphql": ">= 0.11.7 < 1"
@@ -60,10 +60,11 @@
     "eslint-config-prettier": "^2.3.0",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-prettier": "^2.1.2",
+    "fetch-mock": "^7.3.3",
     "graphql": "^0.13.1",
     "husky": "^0.14.3",
     "jest": "^22.0.1",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.18.11",
     "prettier": "^1.5.3",
     "semantic-release": "^12.4.1",
     "supertest": "^3.0.0",

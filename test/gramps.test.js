@@ -1,6 +1,10 @@
 import { GraphQLSchema } from 'graphql';
 import * as GraphQLTools from 'graphql-tools';
+import gql from 'graphql-tag';
+import fetchMock from 'fetch-mock';
 import gramps, { prepare } from '../src';
+
+import remoteIntrospectionSchema from './fixtures/remoteIntrospectionSchema';
 
 describe('GrAMPS', () => {
   beforeEach(() => {
@@ -161,6 +165,30 @@ describe('GrAMPS', () => {
       expect(spy.mock.calls[1][0].mocks).toEqual({
         Test: expect.any(Function),
       });
+    });
+
+    it('properly fetches remoteSchemas', async () => {
+      fetchMock.mock(
+        'http://coolremotegraphqlserver.com/graphql',
+        remoteIntrospectionSchema,
+      );
+
+      const grampsConfig = await gramps({
+        dataSources: [
+          {
+            namespace: 'REMOTE_FOO',
+            remoteSchema: { url: 'http://coolremotegraphqlserver.com/graphql' },
+          },
+        ],
+      });
+
+      fetchMock.restore();
+
+      expect(grampsConfig).toEqual(
+        expect.objectContaining({
+          schema: expect.any(GraphQLSchema),
+        }),
+      );
     });
   });
 });

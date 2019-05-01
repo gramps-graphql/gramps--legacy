@@ -1,41 +1,44 @@
 import { introspectSchema, makeRemoteExecutableSchema } from 'graphql-tools';
 import { HttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
-import fetch from 'node-fetch';
+import 'isomorphic-fetch';
 
-export default async remoteSchemaURLs => {
-  const remoteSchemas = await Promise.all(
-    remoteSchemaURLs.map(async remoteSchemaURL => {
+export default async remoteSchemas => {
+  const schemas = await Promise.all(
+    remoteSchemas.map(async ({ url, setContextCallback = null }) => {
       const http = new HttpLink({
-        uri: remoteSchemaURL,
+        uri: url,
         fetch,
       });
-      const link = setContext((request, previousContext) => {
-        /* istanbul ignore next */
-        if (
-          previousContext.graphqlContext &&
-          previousContext.graphqlContext.req
-        ) {
-          return {
-            headers: {
-              Authorization: `Bearer ${
-                previousContext.graphqlContext.req.user.iam_token
-              }`,
-            },
-          };
-        }
-      }).concat(http);
 
-      const schema = await introspectSchema(link);
+      let link = http;
 
-      const executableSchema = makeRemoteExecutableSchema({
-        schema,
-        link,
-      });
+      // If a setContextCallback is provided attach it to the link
+      if (setContextCallback) {
+        link = setContext(setContextCallback).concat(http);
+      }
 
-      return executableSchema;
+      try {
+        // Get the remote schema
+        const schema = await introspectSchema(link);
+
+        const executableSchema = makeRemoteExecutableSchema({
+          schema,
+          link,
+        });
+
+        return executableSchema;
+      } catch (error) {
+        // If something goes wrong when getting the remote schema return the error and ignore this namespace
+        console.error(
+          `Error retrieving remote schema at: ${url}. Ignoring remote schema. Error: ${error}`,
+        );
+
+        return null;
+      }
     }),
   );
 
-  return remoteSchemas;
+  // Filter out failed remoteSchemas
+  return schemas.filter(schema => schema);
 };
