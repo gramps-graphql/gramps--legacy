@@ -32,7 +32,7 @@
   "dependencies": {
     "apollo-link": "^1.2.8",
     "apollo-link-context": "^1.0.18",
-    "apollo-link-http": "^1.5.11",
+    "apollo-link-http": "^1.5.15",
     "chalk": "^2.1.0",
     "graphql-tag": "^2.10.1",
     "graphql-tools": "^2.20.2",
