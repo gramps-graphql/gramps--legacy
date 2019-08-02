@@ -134,9 +134,8 @@ export async function prepare({
   );
 
   const remoteSources = sources.filter(source => source.remoteSchema);
-  const remoteSchemaURLs = remoteSources.map(source => source.remoteSchema);
 
-  const remoteSchemas = await handleRemoteSchemas(remoteSchemaURLs);
+  const remoteSchemas = await handleRemoteSchemas(remoteSources);
 
   const schema = mergeSchemas({
     schemas: [...schemas, ...linkTypeDefs, ...remoteSchemas],
