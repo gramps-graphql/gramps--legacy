@@ -62,7 +62,7 @@
     "eslint-plugin-prettier": "^2.1.2",
     "fetch-mock": "^7.3.3",
     "graphql": "^0.13.1",
-    "husky": "^0.14.3",
+    "husky": "^3.0.5",
     "jest": "^22.0.1",
     "nodemon": "^1.18.11",
     "prettier": "^1.5.3",
