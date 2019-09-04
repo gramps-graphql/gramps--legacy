@@ -43,7 +43,7 @@
     "graphql": ">= 0.11.7 < 1"
   },
   "devDependencies": {
-    "all-contributors-cli": "^5.7.0",
+    "all-contributors-cli": "^6.9.0",
     "apollo-server-express": "^1.1.2",
     "babel-cli": "^6.24.1",
     "babel-eslint": "^8.0.1",
